@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import "ZMessageKit.h"
 
 @interface ViewController ()
 
@@ -16,7 +17,19 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+    
+    self.edgesForExtendedLayout = UIRectEdgeNone;
+    self.extendedLayoutIncludesOpaqueBars = NO;
+    self.modalPresentationCapturesStatusBarAppearance = NO;
+    
+    self.modalPresentationStyle = UIModalPresentationOverCurrentContext;
+    
+    
+    
+    ZMessageKit *messageView = [[ZMessageKit alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height -  64)];
+    messageView.backgroundColor = [UIColor redColor];
+    [self.view addSubview:messageView];
+    
 }
 
 - (void)didReceiveMemoryWarning {

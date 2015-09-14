@@ -14,6 +14,8 @@
 		38A3EE001BA7099A008118E9 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 38A3EDFF1BA7099A008118E9 /* Images.xcassets */; };
 		38A3EE031BA7099A008118E9 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38A3EE011BA7099A008118E9 /* LaunchScreen.xib */; };
 		38A3EE0F1BA7099A008118E9 /* ZMessageKitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 38A3EE0E1BA7099A008118E9 /* ZMessageKitTests.m */; };
+		38C97AE11BA70B4200940814 /* ZMessageKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 38C97AE01BA70B4200940814 /* ZMessageKit.m */; };
+		38C97AE41BA719B900940814 /* MessageViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 38C97AE31BA719B900940814 /* MessageViewCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +42,10 @@
 		38A3EE081BA7099A008118E9 /* ZMessageKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ZMessageKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		38A3EE0D1BA7099A008118E9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		38A3EE0E1BA7099A008118E9 /* ZMessageKitTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZMessageKitTests.m; sourceTree = "<group>"; };
+		38C97ADF1BA70B4200940814 /* ZMessageKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZMessageKit.h; sourceTree = "<group>"; };
+		38C97AE01BA70B4200940814 /* ZMessageKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZMessageKit.m; sourceTree = "<group>"; };
+		38C97AE21BA719B900940814 /* MessageViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageViewCell.h; sourceTree = "<group>"; };
+		38C97AE31BA719B900940814 /* MessageViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +87,7 @@
 		38A3EDF11BA7099A008118E9 /* ZMessageKit */ = {
 			isa = PBXGroup;
 			children = (
+				38C97ADE1BA70AF900940814 /* Classes */,
 				38A3EDF61BA7099A008118E9 /* AppDelegate.h */,
 				38A3EDF71BA7099A008118E9 /* AppDelegate.m */,
 				38A3EDF91BA7099A008118E9 /* ViewController.h */,
@@ -117,6 +124,17 @@
 				38A3EE0D1BA7099A008118E9 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		38C97ADE1BA70AF900940814 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				38C97ADF1BA70B4200940814 /* ZMessageKit.h */,
+				38C97AE01BA70B4200940814 /* ZMessageKit.m */,
+				38C97AE21BA719B900940814 /* MessageViewCell.h */,
+				38C97AE31BA719B900940814 /* MessageViewCell.m */,
+			);
+			path = Classes;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -221,7 +239,9 @@
 			files = (
 				38A3EDFB1BA7099A008118E9 /* ViewController.m in Sources */,
 				38A3EDF81BA7099A008118E9 /* AppDelegate.m in Sources */,
+				38C97AE41BA719B900940814 /* MessageViewCell.m in Sources */,
 				38A3EDF51BA7099A008118E9 /* main.m in Sources */,
+				38C97AE11BA70B4200940814 /* ZMessageKit.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -416,6 +436,7 @@
 				38A3EE141BA7099A008118E9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		38A3EE151BA7099A008118E9 /* Build configuration list for PBXNativeTarget "ZMessageKitTests" */ = {
 			isa = XCConfigurationList;
@@ -424,6 +445,7 @@
 				38A3EE171BA7099A008118E9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
