@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A49064FA446FC52599D169A /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DF43275AB19E61EFDBA443F /* libPods.a */; };
+		38C97AEB1BA71E9600940814 /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = 38C97AE71BA71E9600940814 /* .gitkeep */; };
+		38C97AEC1BA71E9600940814 /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = 38C97AE91BA71E9600940814 /* .gitkeep */; };
+		38C97AF01BA71F3100940814 /* ZMessageViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 38C97AEF1BA71F3100940814 /* ZMessageViewCell.m */; };
+		38C97AF31BA71F6E00940814 /* ZMessageKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 38C97AF21BA71F6E00940814 /* ZMessageKit.m */; };
 		6003F58E195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
 		6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58F195388D20070C39A /* CoreGraphics.framework */; };
 		6003F592195388D20070C39A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
@@ -21,7 +26,6 @@
 		6003F5BA195388D20070C39A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6003F5B8195388D20070C39A /* InfoPlist.strings */; };
 		6003F5BC195388D20070C39A /* Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F5BB195388D20070C39A /* Tests.m */; };
 		873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 873B8AEA1B1F5CCA007FD442 /* Main.storyboard */; };
-		C4E447D04BD100C83718E31C /* Pods_ZMessageKit_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03D90E775945C1FB7CF732E1 /* Pods_ZMessageKit_Example.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		EC23448617D56D2D4B800E3E /* Pods_ZMessageKit_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85140E2AB23381AAF0751624 /* Pods_ZMessageKit_Tests.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
@@ -38,9 +42,15 @@
 /* Begin PBXFileReference section */
 		03D90E775945C1FB7CF732E1 /* Pods_ZMessageKit_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ZMessageKit_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		336D99BE5387EBA4836EEF4D /* ZMessageKit.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = ZMessageKit.podspec; path = ../ZMessageKit.podspec; sourceTree = "<group>"; };
+		38C97AE71BA71E9600940814 /* .gitkeep */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		38C97AE91BA71E9600940814 /* .gitkeep */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		38C97AEE1BA71F3100940814 /* ZMessageViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZMessageViewCell.h; sourceTree = "<group>"; };
+		38C97AEF1BA71F3100940814 /* ZMessageViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZMessageViewCell.m; sourceTree = "<group>"; };
+		38C97AF11BA71F6E00940814 /* ZMessageKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZMessageKit.h; sourceTree = "<group>"; };
+		38C97AF21BA71F6E00940814 /* ZMessageKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZMessageKit.m; sourceTree = "<group>"; };
 		56C2FB3EDD1FBF6F6F8F6C9F /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		5B5D27CCEF2FCD5D8C26107B /* Pods-ZMessageKit_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZMessageKit_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ZMessageKit_Example/Pods-ZMessageKit_Example.debug.xcconfig"; sourceTree = "<group>"; };
-		6003F58A195388D20070C39A /* ZMessageKit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = ZMessageKit.app; path = ZMessageKit_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		6003F58A195388D20070C39A /* ZMessageKit_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZMessageKit_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6003F58D195388D20070C39A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		6003F58F195388D20070C39A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		6003F591195388D20070C39A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -53,7 +63,7 @@
 		6003F5A5195388D20070C39A /* ZViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZViewController.h; sourceTree = "<group>"; };
 		6003F5A6195388D20070C39A /* ZViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZViewController.m; sourceTree = "<group>"; };
 		6003F5A8195388D20070C39A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		6003F5AE195388D20070C39A /* Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = Tests.xctest; path = ZMessageKit_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		6003F5AE195388D20070C39A /* ZMessageKit_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ZMessageKit_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6003F5AF195388D20070C39A /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		6003F5B7195388D20070C39A /* Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Tests-Info.plist"; sourceTree = "<group>"; };
 		6003F5B9195388D20070C39A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -61,9 +71,12 @@
 		606FC2411953D9B200FFA9A0 /* Tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tests-Prefix.pch"; sourceTree = "<group>"; };
 		76C084F1302D343C31451648 /* Pods-ZMessageKit_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZMessageKit_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ZMessageKit_Tests/Pods-ZMessageKit_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		7CBF1C24476533B9A6CF1B0D /* Pods-ZMessageKit_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZMessageKit_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ZMessageKit_Tests/Pods-ZMessageKit_Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		7DF43275AB19E61EFDBA443F /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		85140E2AB23381AAF0751624 /* Pods_ZMessageKit_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ZMessageKit_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		873B8AEA1B1F5CCA007FD442 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		9074731132D6A5F7356977D3 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		A57BCDE97DB22674D55C3599 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		A7ABEC8767A3EE5AC3BDA482 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		E587BA60AF4256A7821A0AB4 /* Pods-ZMessageKit_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZMessageKit_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-ZMessageKit_Example/Pods-ZMessageKit_Example.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -75,7 +88,7 @@
 				6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */,
 				6003F592195388D20070C39A /* UIKit.framework in Frameworks */,
 				6003F58E195388D20070C39A /* Foundation.framework in Frameworks */,
-				C4E447D04BD100C83718E31C /* Pods_ZMessageKit_Example.framework in Frameworks */,
+				0A49064FA446FC52599D169A /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -93,6 +106,36 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		38C97AE51BA71E9600940814 /* Pod */ = {
+			isa = PBXGroup;
+			children = (
+				38C97AE61BA71E9600940814 /* Assets */,
+				38C97AE81BA71E9600940814 /* Classes */,
+			);
+			name = Pod;
+			path = ../../Pod;
+			sourceTree = "<group>";
+		};
+		38C97AE61BA71E9600940814 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				38C97AE71BA71E9600940814 /* .gitkeep */,
+			);
+			path = Assets;
+			sourceTree = "<group>";
+		};
+		38C97AE81BA71E9600940814 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				38C97AE91BA71E9600940814 /* .gitkeep */,
+				38C97AEE1BA71F3100940814 /* ZMessageViewCell.h */,
+				38C97AEF1BA71F3100940814 /* ZMessageViewCell.m */,
+				38C97AF11BA71F6E00940814 /* ZMessageKit.h */,
+				38C97AF21BA71F6E00940814 /* ZMessageKit.m */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
 		4B6BF6089E78CE59C4B945AB /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -100,6 +143,8 @@
 				E587BA60AF4256A7821A0AB4 /* Pods-ZMessageKit_Example.release.xcconfig */,
 				7CBF1C24476533B9A6CF1B0D /* Pods-ZMessageKit_Tests.debug.xcconfig */,
 				76C084F1302D343C31451648 /* Pods-ZMessageKit_Tests.release.xcconfig */,
+				A7ABEC8767A3EE5AC3BDA482 /* Pods.debug.xcconfig */,
+				9074731132D6A5F7356977D3 /* Pods.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -119,8 +164,8 @@
 		6003F58B195388D20070C39A /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				6003F58A195388D20070C39A /* ZMessageKit.app */,
-				6003F5AE195388D20070C39A /* Tests.xctest */,
+				6003F58A195388D20070C39A /* ZMessageKit_Example.app */,
+				6003F5AE195388D20070C39A /* ZMessageKit_Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -134,6 +179,7 @@
 				6003F5AF195388D20070C39A /* XCTest.framework */,
 				03D90E775945C1FB7CF732E1 /* Pods_ZMessageKit_Example.framework */,
 				85140E2AB23381AAF0751624 /* Pods_ZMessageKit_Tests.framework */,
+				7DF43275AB19E61EFDBA443F /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -141,6 +187,7 @@
 		6003F593195388D20070C39A /* Example for ZMessageKit */ = {
 			isa = PBXGroup;
 			children = (
+				38C97AE51BA71E9600940814 /* Pod */,
 				6003F59C195388D20070C39A /* ZAppDelegate.h */,
 				6003F59D195388D20070C39A /* ZAppDelegate.m */,
 				873B8AEA1B1F5CCA007FD442 /* Main.storyboard */,
@@ -213,7 +260,7 @@
 			);
 			name = ZMessageKit_Example;
 			productName = ZMessageKit;
-			productReference = 6003F58A195388D20070C39A /* ZMessageKit.app */;
+			productReference = 6003F58A195388D20070C39A /* ZMessageKit_Example.app */;
 			productType = "com.apple.product-type.application";
 		};
 		6003F5AD195388D20070C39A /* ZMessageKit_Tests */ = {
@@ -234,7 +281,7 @@
 			);
 			name = ZMessageKit_Tests;
 			productName = ZMessageKitTests;
-			productReference = 6003F5AE195388D20070C39A /* Tests.xctest */;
+			productReference = 6003F5AE195388D20070C39A /* ZMessageKit_Tests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -278,7 +325,9 @@
 			files = (
 				873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */,
 				6003F5A9195388D20070C39A /* Images.xcassets in Resources */,
+				38C97AEC1BA71E9600940814 /* .gitkeep in Resources */,
 				6003F598195388D20070C39A /* InfoPlist.strings in Resources */,
+				38C97AEB1BA71E9600940814 /* .gitkeep in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -320,7 +369,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ZMessageKit_Example/Pods-ZMessageKit_Example-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		55A36A9F9A1118A68B90BBA1 /* Copy Pods Resources */ = {
@@ -380,7 +429,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ZMessageKit_Example/Pods-ZMessageKit_Example-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -391,6 +440,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				6003F59E195388D20070C39A /* ZAppDelegate.m in Sources */,
+				38C97AF31BA71F6E00940814 /* ZMessageKit.m in Sources */,
+				38C97AF01BA71F3100940814 /* ZMessageViewCell.m in Sources */,
 				6003F5A7195388D20070C39A /* ZViewController.m in Sources */,
 				6003F59A195388D20070C39A /* main.m in Sources */,
 			);
@@ -508,7 +559,7 @@
 		};
 		6003F5C0195388D20070C39A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5B5D27CCEF2FCD5D8C26107B /* Pods-ZMessageKit_Example.debug.xcconfig */;
+			baseConfigurationReference = A7ABEC8767A3EE5AC3BDA482 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -517,13 +568,14 @@
 				INFOPLIST_FILE = "ZMessageKit/ZMessageKit-Info.plist";
 				MODULE_NAME = ExampleApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
 		};
 		6003F5C1195388D20070C39A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E587BA60AF4256A7821A0AB4 /* Pods-ZMessageKit_Example.release.xcconfig */;
+			baseConfigurationReference = 9074731132D6A5F7356977D3 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -532,13 +584,13 @@
 				INFOPLIST_FILE = "ZMessageKit/ZMessageKit-Info.plist";
 				MODULE_NAME = ExampleApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
 		};
 		6003F5C3195388D20070C39A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7CBF1C24476533B9A6CF1B0D /* Pods-ZMessageKit_Tests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -561,7 +613,6 @@
 		};
 		6003F5C4195388D20070C39A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 76C084F1302D343C31451648 /* Pods-ZMessageKit_Tests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				FRAMEWORK_SEARCH_PATHS = (
