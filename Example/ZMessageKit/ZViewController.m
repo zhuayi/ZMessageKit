@@ -25,6 +25,8 @@
 
     
     ZMessageKit *messageView = [[ZMessageKit alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height -  64)];
+    
+    messageView.style.messageFont = [UIFont systemFontOfSize:12.0];
     [self.view addSubview:messageView];
 }
 

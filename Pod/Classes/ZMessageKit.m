@@ -9,6 +9,7 @@
 #import "ZMessageKit.h"
 #import "ZMessageViewCell.h"
 
+
 @implementation ZMessageKit
 
 static NSString * CellIdentifier = @"GradientCell";
@@ -28,6 +29,9 @@ static NSString * CellIdentifier = @"GradientCell";
     return self;
 }
 
+- (ZMessageStyle *)style {
+    return [ZMessageStyle sharedManager];
+}
 
 - (void)didMoveToSuperview {
     [super didMoveToSuperview];
@@ -72,7 +76,24 @@ static NSString * CellIdentifier = @"GradientCell";
     
     ZMessageViewCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:CellIdentifier forIndexPath:indexPath];
     cell.backgroundColor = [UIColor whiteColor];
-    cell.messages = @"UICollectionView 和 UICollectionViewController 类是iOS6 新引进的API";
+    
+    ZMessageModel *messageModel = [[ZMessageModel alloc] init];
+    
+    if ((indexPath.row % 2)) {
+        messageModel.messages = @"UICollectionView 和 UICollectionViewController 类是iOS6 新引进的API";
+    } else {
+        
+        
+        messageModel.messages = [NSURL URLWithString:@"http://img.my.csdn.net/uploads/201106/17/0_1308319252KeUu.gif"];
+    }
+    
+    if ((indexPath.row % 3)) {
+    
+        messageModel.mySelf = YES;
+    }
+    cell.messageModel = messageModel;
+//    cell.messages =
+//    cell.isSelf = (indexPath.row % 2);
     return cell;
 }
 

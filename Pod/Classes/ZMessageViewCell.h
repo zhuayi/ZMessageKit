@@ -7,11 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ZMessageModel.h"
 
 @interface ZMessageViewCell : UICollectionViewCell
 
-@property (nonatomic, strong) NSString *messages;
-
-@property (nonatomic, assign) BOOL isSelf;
+@property (nonatomic, strong) ZMessageModel *messageModel;
 
 @end

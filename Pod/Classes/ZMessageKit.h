@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ZMessageStyle.h"
 
 @interface ZMessageKit : UICollectionView<UICollectionViewDelegate,UICollectionViewDataSource>
+
+@property (nonatomic, strong) ZMessageStyle *style;
 
 @end

@@ -8,10 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		0A49064FA446FC52599D169A /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DF43275AB19E61EFDBA443F /* libPods.a */; };
-		38C97AEB1BA71E9600940814 /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = 38C97AE71BA71E9600940814 /* .gitkeep */; };
-		38C97AEC1BA71E9600940814 /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = 38C97AE91BA71E9600940814 /* .gitkeep */; };
+		386B24AE1BA72ACF00918C2F /* ZMessageStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 386B24AD1BA72ACF00918C2F /* ZMessageStyle.m */; };
 		38C97AF01BA71F3100940814 /* ZMessageViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 38C97AEF1BA71F3100940814 /* ZMessageViewCell.m */; };
 		38C97AF31BA71F6E00940814 /* ZMessageKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 38C97AF21BA71F6E00940814 /* ZMessageKit.m */; };
+		38C97AF61BA721DE00940814 /* ZMessageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 38C97AF51BA721DE00940814 /* ZMessageModel.m */; };
 		6003F58E195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
 		6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58F195388D20070C39A /* CoreGraphics.framework */; };
 		6003F592195388D20070C39A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
@@ -42,12 +42,14 @@
 /* Begin PBXFileReference section */
 		03D90E775945C1FB7CF732E1 /* Pods_ZMessageKit_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ZMessageKit_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		336D99BE5387EBA4836EEF4D /* ZMessageKit.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = ZMessageKit.podspec; path = ../ZMessageKit.podspec; sourceTree = "<group>"; };
-		38C97AE71BA71E9600940814 /* .gitkeep */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
-		38C97AE91BA71E9600940814 /* .gitkeep */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		386B24AC1BA72ACF00918C2F /* ZMessageStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZMessageStyle.h; sourceTree = "<group>"; };
+		386B24AD1BA72ACF00918C2F /* ZMessageStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZMessageStyle.m; sourceTree = "<group>"; };
 		38C97AEE1BA71F3100940814 /* ZMessageViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZMessageViewCell.h; sourceTree = "<group>"; };
 		38C97AEF1BA71F3100940814 /* ZMessageViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZMessageViewCell.m; sourceTree = "<group>"; };
 		38C97AF11BA71F6E00940814 /* ZMessageKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZMessageKit.h; sourceTree = "<group>"; };
 		38C97AF21BA71F6E00940814 /* ZMessageKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZMessageKit.m; sourceTree = "<group>"; };
+		38C97AF41BA721DE00940814 /* ZMessageModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZMessageModel.h; sourceTree = "<group>"; };
+		38C97AF51BA721DE00940814 /* ZMessageModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZMessageModel.m; sourceTree = "<group>"; };
 		56C2FB3EDD1FBF6F6F8F6C9F /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		5B5D27CCEF2FCD5D8C26107B /* Pods-ZMessageKit_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZMessageKit_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ZMessageKit_Example/Pods-ZMessageKit_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		6003F58A195388D20070C39A /* ZMessageKit_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZMessageKit_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -119,7 +121,6 @@
 		38C97AE61BA71E9600940814 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
-				38C97AE71BA71E9600940814 /* .gitkeep */,
 			);
 			path = Assets;
 			sourceTree = "<group>";
@@ -127,11 +128,14 @@
 		38C97AE81BA71E9600940814 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				38C97AE91BA71E9600940814 /* .gitkeep */,
 				38C97AEE1BA71F3100940814 /* ZMessageViewCell.h */,
 				38C97AEF1BA71F3100940814 /* ZMessageViewCell.m */,
 				38C97AF11BA71F6E00940814 /* ZMessageKit.h */,
 				38C97AF21BA71F6E00940814 /* ZMessageKit.m */,
+				38C97AF41BA721DE00940814 /* ZMessageModel.h */,
+				38C97AF51BA721DE00940814 /* ZMessageModel.m */,
+				386B24AC1BA72ACF00918C2F /* ZMessageStyle.h */,
+				386B24AD1BA72ACF00918C2F /* ZMessageStyle.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -325,9 +329,7 @@
 			files = (
 				873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */,
 				6003F5A9195388D20070C39A /* Images.xcassets in Resources */,
-				38C97AEC1BA71E9600940814 /* .gitkeep in Resources */,
 				6003F598195388D20070C39A /* InfoPlist.strings in Resources */,
-				38C97AEB1BA71E9600940814 /* .gitkeep in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -439,8 +441,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				386B24AE1BA72ACF00918C2F /* ZMessageStyle.m in Sources */,
 				6003F59E195388D20070C39A /* ZAppDelegate.m in Sources */,
 				38C97AF31BA71F6E00940814 /* ZMessageKit.m in Sources */,
+				38C97AF61BA721DE00940814 /* ZMessageModel.m in Sources */,
 				38C97AF01BA71F3100940814 /* ZMessageViewCell.m in Sources */,
 				6003F5A7195388D20070C39A /* ZViewController.m in Sources */,
 				6003F59A195388D20070C39A /* main.m in Sources */,
