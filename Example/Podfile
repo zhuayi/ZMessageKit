@@ -1,0 +1,12 @@
+source 'https://github.com/CocoaPods/Specs.git'
+use_frameworks!
+
+target 'ZMessageKit_Example', :exclusive => true do
+  pod "ZMessageKit", :path => "../"
+end
+
+target 'ZMessageKit_Tests', :exclusive => true do
+  pod "ZMessageKit", :path => "../"
+
+  
+end
