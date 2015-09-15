@@ -19,8 +19,6 @@
     
     // 数据总数
     NSInteger _dataCount;
-    
-    UICollectionView *_collectionView;
 }
 
 static NSString *CellIdentifier = @"GradientCell";
@@ -57,7 +55,7 @@ static NSString *kfooterIdentifier =  @"kfooterIdentifier";
 - (void)didMoveToSuperview {
     [super didMoveToSuperview];
     
-    _dataCount = [_messageDelegate numberOfItemsInMessageKit];
+    _dataCount = [_delegate numberOfItemsInMessageKit];
     [self scrollToBottom:NO];
 }
 
@@ -156,7 +154,7 @@ static NSString *kfooterIdentifier =  @"kfooterIdentifier";
         [_messageModelDict setObject:messageModel forKey:@(indexPath.row)];
     }
    
-    messageModel = [_messageDelegate messageModelOfItems:indexPath messageModel:messageModel];
+    messageModel = [_delegate messageModelOfItems:indexPath messageModel:messageModel];
 
     return CGSizeMake(self.frame.size.width - 20, messageModel.height);
 }

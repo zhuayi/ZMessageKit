@@ -9,7 +9,10 @@
 #import "ZViewController.h"
 
 
-@implementation ZViewController
+@implementation ZViewController {
+    
+    ZMessageKit *_messageView;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -22,17 +25,17 @@
     self.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
 
     
-    ZMessageKit *messageView = [[ZMessageKit alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height -  64)];
-    messageView.messageDelegate = self;
-    messageView.style.messageFont = [UIFont systemFontOfSize:12.0];
-    [self.view addSubview:messageView];
+    _messageView = [[ZMessageKit alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height -  64)];
+    _messageView.delegate = self;
+    _messageView.style.messageFont = [UIFont systemFontOfSize:12.0];
+    [self.view addSubview:_messageView];
+
+    self.rightButton.title = @"新增数据";
+}
+
+- (void)rightButtonAction {
     
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        
-        [messageView insertMessage:10];
-    });
-    
-    
+    [_messageView insertMessage:(arc4random() % 10) + 1];
 }
 
 #pragma mark - ZMessageDelegate

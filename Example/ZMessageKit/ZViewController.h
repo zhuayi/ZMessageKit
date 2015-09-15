@@ -8,7 +8,7 @@
 
 @import UIKit;
 #import "ZMessageKit.h"
-
-@interface ZViewController : UIViewController<ZMessageDelegate>
+#import "ZBaseViewController.h"
+@interface ZViewController : ZBaseViewController<ZMessageDelegate>
 
 @end

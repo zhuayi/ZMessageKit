@@ -27,13 +27,17 @@
 /**
  *  代理方法
  */
-@property (nonatomic, weak) id<ZMessageDelegate> messageDelegate;
+@property (nonatomic, weak) id<ZMessageDelegate> delegate;
 
 /**
  *  样式
  */
 @property (nonatomic, strong) ZMessageStyle *style;
 
+/**
+ *  消息列表
+ */
+@property (nonatomic, strong) UICollectionView *collectionView;
 
 /**
  *  新增消息
