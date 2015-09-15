@@ -58,7 +58,37 @@ static NSString *kfooterIdentifier =  @"kfooterIdentifier";
     [super didMoveToSuperview];
     
     _dataCount = [_messageDelegate numberOfItemsInMessageKit];
-    [_collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:(_dataCount - 1) inSection:0] atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:NO];
+    [self scrollToBottom:NO];
+}
+
+/**
+ *  滚动到底部
+ */
+- (void)scrollToBottom:(BOOL)animated {
+    
+    [_collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:(_dataCount - 1) inSection:0] atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:animated];
+}
+
+- (void)insertMessage:(NSInteger)count {
+
+    _dataCount += count;
+    
+    NSMutableArray *array = [NSMutableArray new];
+    
+    for (int i = 0 ; i < count; i++) {
+        
+        [array addObject:[NSIndexPath indexPathForItem:_dataCount - i - 1 inSection:0]];
+    }
+    [_collectionView performBatchUpdates:^{
+        
+        [_collectionView insertItemsAtIndexPaths:array];
+        
+    } completion:^(BOOL finished) {
+        
+        [self scrollToBottom:YES];
+        
+    }];
+    
 }
 
 #pragma mark -- UICollectionViewDataSource
@@ -127,9 +157,10 @@ static NSString *kfooterIdentifier =  @"kfooterIdentifier";
     }
    
     messageModel = [_messageDelegate messageModelOfItems:indexPath messageModel:messageModel];
-    
+
     return CGSizeMake(self.frame.size.width - 20, messageModel.height);
 }
+
 
 /**
  *  定义每个UICollectionView 的 margin

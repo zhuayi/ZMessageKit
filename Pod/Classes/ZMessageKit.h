@@ -24,8 +24,26 @@
 
 @interface ZMessageKit : UIView<UICollectionViewDelegate,UICollectionViewDataSource>
 
+/**
+ *  代理方法
+ */
 @property (nonatomic, weak) id<ZMessageDelegate> messageDelegate;
 
+/**
+ *  样式
+ */
 @property (nonatomic, strong) ZMessageStyle *style;
 
+
+/**
+ *  新增消息
+ *
+ *  @param count 新增消息数
+ */
+- (void)insertMessage:(NSInteger)count;
+
+/**
+ *  滚动到底部
+ */
+- (void)scrollToBottom:(BOOL)animated;
 @end
