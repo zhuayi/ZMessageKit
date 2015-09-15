@@ -7,10 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ZMessageDelegate.h"
+@interface ZMessageSendView : UIView<UITextFieldDelegate>
 
-@interface ZMessageSendView : UIView
-
-@property (nonatomic, weak) id<UITextFieldDelegate> delegate;
+/**
+ *  代理方法
+ */
+@property (nonatomic, weak) id<ZMessageDelegate> delegate;
 
 /**
  *  语音按钮

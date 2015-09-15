@@ -61,6 +61,7 @@
 		38769D721BA85A3900DC20E7 /* sendother@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sendother@2x.png"; sourceTree = "<group>"; };
 		38769D751BA85A3900DC20E7 /* voice.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = voice.png; sourceTree = "<group>"; };
 		38769D761BA85A3900DC20E7 /* voice@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "voice@2x.png"; sourceTree = "<group>"; };
+		38769D7F1BA874EA00DC20E7 /* ZMessageDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZMessageDelegate.h; sourceTree = "<group>"; };
 		389B2E351BA8221900B6D869 /* ZMessageSendView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZMessageSendView.h; sourceTree = "<group>"; };
 		389B2E361BA8221900B6D869 /* ZMessageSendView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZMessageSendView.m; sourceTree = "<group>"; };
 		38C97AEE1BA71F3100940814 /* ZMessageViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZMessageViewCell.h; sourceTree = "<group>"; };
@@ -165,6 +166,7 @@
 				386B24AD1BA72ACF00918C2F /* ZMessageStyle.m */,
 				389B2E351BA8221900B6D869 /* ZMessageSendView.h */,
 				389B2E361BA8221900B6D869 /* ZMessageSendView.m */,
+				38769D7F1BA874EA00DC20E7 /* ZMessageDelegate.h */,
 			);
 			path = Classes;
 			sourceTree = "<group>";

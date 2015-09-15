@@ -10,18 +10,7 @@
 #import "ZMessageStyle.h"
 #import "ZMessageModel.h"
 #import "ZMessageSendView.h"
-@protocol ZMessageDelegate <NSObject>
-
-/**
- *  消息数
- *
- *  @return 
- */
-- (NSInteger)numberOfItemsInMessageKit;
-
-- (ZMessageModel *)messageModelOfItems:(NSIndexPath *)indexPath messageModel:(ZMessageModel *)messageModel;
-
-@end
+#import "ZMessageDelegate.h"
 
 @interface ZMessageKit : UIView<UICollectionViewDelegate,UICollectionViewDataSource,UITextFieldDelegate>
 

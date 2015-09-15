@@ -35,7 +35,6 @@ static NSString *kfooterIdentifier =  @"kfooterIdentifier";
         _messageModelDict = [NSMutableDictionary new];
         
         _sendView = [[ZMessageSendView alloc] initWithFrame:CGRectMake(0, frame.size.height - 39, SCREEN_WIDTH, 39)];
-        _sendView.delegate = self;
         [self addSubview:_sendView];
         
         UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc]init];
@@ -52,6 +51,10 @@ static NSString *kfooterIdentifier =  @"kfooterIdentifier";
     return self;
 }
 
+- (void)setDelegate:(id<ZMessageDelegate>)delegate {
+    _delegate = delegate;
+    _sendView.delegate = delegate;
+}
 - (ZMessageStyle *)style {
     return [ZMessageStyle sharedManager];
 }
@@ -187,10 +190,21 @@ static NSString *kfooterIdentifier =  @"kfooterIdentifier";
 
 #pragma mark - textFieldDelegate
 
+/**
+ *  获取手势, 触摸列表后隐藏键盘
+ *
+ *  @param touches
+ *  @param event
+ */
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     [_sendView.textField resignFirstResponder];
 }
 
+/**
+ *  键盘即将显示时,重置坐标
+ *
+ *  @param notification
+ */
 - (void)keyboardWillShow:(NSNotification*)notification {
     NSDictionary *userInfo = [notification userInfo];
     NSValue* aValue = [userInfo objectForKey:UIKeyboardFrameEndUserInfoKey];
@@ -205,6 +219,11 @@ static NSString *kfooterIdentifier =  @"kfooterIdentifier";
     
 }
 
+/**
+ *  键盘隐藏时,重置坐标
+ *
+ *  @param notification
+ */
 - (void)keyboardWillHide:(NSNotification*)notification {
     
     _sendView.top = self.height - _sendView.height;
@@ -212,14 +231,9 @@ static NSString *kfooterIdentifier =  @"kfooterIdentifier";
     _collectionView.userInteractionEnabled = YES;
 }
 
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString*)string {
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     
-    [textField resignFirstResponder];
-    return YES;
-}
-
-- (void)textFieldDidBeginEditing:(UITextField *)textField {
-
-    [self scrollToBottom:YES];
+    NSLog(@"%s",  __func__);
 }
 @end

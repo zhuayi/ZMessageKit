@@ -9,6 +9,7 @@
 #import "ZMessageSendView.h"
 #import "ZMacro.h"
 #import "UIView+Util.h"
+
 @implementation ZMessageSendView
 
 
@@ -25,15 +26,11 @@
         [self addSubview:self.voiceButton];
         
         _textField = [[UITextField alloc] initWithFrame:CGRectMake(5 + 24 + 5, (self.height - 30) / 2, self.width - 3 * 32, 30)];
+        _textField.delegate = self;
         [_textField setBorderStyle:UITextBorderStyleRoundedRect];
         [self addSubview:_textField];
     }
     return self;
-}
-
-- (void)setDelegate:(id<UITextFieldDelegate>)delegate {
-    _delegate = delegate;
-    _textField.delegate = _delegate;
 }
 
 - (UIButton *)faceButton {
@@ -62,6 +59,30 @@
         [_voiceButton setBackgroundImage:[UIImage imageNamed:@"voice"] forState:UIControlStateNormal];
     }
     return _voiceButton;
+}
+
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString*)string {
+    
+    NSString *text = [textField.text stringByReplacingCharactersInRange:range withString:string];
+    _textField.text = text;
+    return NO;
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    
+    if ([_textField.text isEqualToString:@""]) {
+        return NO;
+    }
+    
+    [_delegate didSendMessage:textField.text];
+    _textField.text = @"";
+    return YES;
+}
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    
+
 }
 
 @end

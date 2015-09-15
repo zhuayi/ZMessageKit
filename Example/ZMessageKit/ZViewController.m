@@ -61,4 +61,10 @@
     
     return messageModel;
 }
+
+
+- (void)didSendMessage:(NSObject*)message {
+    
+    [_messageView insertMessage:1];
+}
 @end
