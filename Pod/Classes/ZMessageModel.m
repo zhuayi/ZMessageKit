@@ -10,11 +10,20 @@
 #import "UIImageView+WebCache.h"
 #import "ZMessageStyle.h"
 #import "ZMacro.h"
+
 @implementation ZMessageModel
 
 
 - (void)setMessages:(NSObject *)messages {
     
+    _messages = messages;
+    
+    if (_height > 0) {
+        
+        return ;
+    }
+    
+    // 获取文本内容的高度;
     if ([messages isKindOfClass:[NSString class]]) {
         
         NSDictionary *fontDict = @{
@@ -24,8 +33,11 @@
                                                          options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading
                                                       attributes:fontDict
                                                          context:nil];
-        _height = size.size.height;
+        _height = size.size.height + 20;
     }
-    _messages = messages;
+    
+    
+    
+    
 }
 @end

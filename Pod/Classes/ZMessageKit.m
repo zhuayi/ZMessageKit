@@ -8,23 +8,44 @@
 
 #import "ZMessageKit.h"
 #import "ZMessageViewCell.h"
+#import "ZMessageSendView.h"
+#import "ZMacro.h"
+#import "UIView+Util.h"
 
+@implementation ZMessageKit {
+    
+    // 数据对象字典
+    NSMutableDictionary *_messageModelDict;
+    
+    // 数据总数
+    NSInteger _dataCount;
+    
+    UICollectionView *_collectionView;
+}
 
-@implementation ZMessageKit
-
-static NSString * CellIdentifier = @"GradientCell";
+static NSString *CellIdentifier = @"GradientCell";
+static NSString *kfooterIdentifier =  @"kfooterIdentifier";
 
 - (instancetype)initWithFrame:(CGRect)frame {
     
-    UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc]init];
-    
-    self = [super initWithFrame:frame collectionViewLayout:flowLayout];
+    self = [super initWithFrame:frame];
     if (self) {
         self.backgroundColor = [UIColor whiteColor];
-        self.delegate = self;
-        self.dataSource = self;
+
+        _messageModelDict = [NSMutableDictionary new];
         
-        [self registerClass:[ZMessageViewCell class] forCellWithReuseIdentifier:CellIdentifier];
+        ZMessageSendView *sendView = [[ZMessageSendView alloc] initWithFrame:CGRectMake(0, frame.size.height - 50, SCREEN_WIDTH, 50)];
+        [self addSubview:sendView];
+        
+        
+        UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc]init];
+        _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, self.width, self.height - sendView.height) collectionViewLayout:flowLayout];
+        _collectionView.backgroundColor = [UIColor whiteColor];
+        [_collectionView registerClass:[ZMessageViewCell class] forCellWithReuseIdentifier:CellIdentifier];
+        _collectionView.delegate = self;
+        _collectionView.dataSource = self;
+        [self addSubview:_collectionView];
+  
     }
     return self;
 }
@@ -36,7 +57,8 @@ static NSString * CellIdentifier = @"GradientCell";
 - (void)didMoveToSuperview {
     [super didMoveToSuperview];
     
-    [self scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:29 inSection:0] atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:NO];
+    _dataCount = [_messageDelegate numberOfItemsInMessageKit];
+    [_collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:(_dataCount - 1) inSection:0] atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:NO];
 }
 
 #pragma mark -- UICollectionViewDataSource
@@ -50,7 +72,7 @@ static NSString * CellIdentifier = @"GradientCell";
  *  @return
  */
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return 30;
+    return _dataCount;
 }
 
 /**
@@ -64,6 +86,7 @@ static NSString * CellIdentifier = @"GradientCell";
     return 1;
 }
 
+
 /**
  *  每个UICollectionView展示的内容
  *
@@ -75,25 +98,9 @@ static NSString * CellIdentifier = @"GradientCell";
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
     ZMessageViewCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:CellIdentifier forIndexPath:indexPath];
-    cell.backgroundColor = [UIColor whiteColor];
     
-    ZMessageModel *messageModel = [[ZMessageModel alloc] init];
+    cell.messageModel = _messageModelDict[@(indexPath.row)];
     
-    if ((indexPath.row % 2)) {
-        messageModel.messages = @"UICollectionView 和 UICollectionViewController 类是iOS6 新引进的API";
-    } else {
-        
-        
-        messageModel.messages = [NSURL URLWithString:@"http://img.my.csdn.net/uploads/201106/17/0_1308319252KeUu.gif"];
-    }
-    
-    if ((indexPath.row % 3)) {
-    
-        messageModel.mySelf = YES;
-    }
-    cell.messageModel = messageModel;
-//    cell.messages =
-//    cell.isSelf = (indexPath.row % 2);
     return cell;
 }
 
@@ -110,7 +117,18 @@ static NSString * CellIdentifier = @"GradientCell";
  *  @return
  */
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    return CGSizeMake(self.frame.size.width - 20, 200);
+    
+    ZMessageModel *messageModel;
+    
+    messageModel = _messageModelDict[@(indexPath.row)];
+    if (messageModel == nil) {
+        messageModel = [[ZMessageModel alloc] init];
+        [_messageModelDict setObject:messageModel forKey:@(indexPath.row)];
+    }
+   
+    messageModel = [_messageDelegate messageModelOfItems:indexPath messageModel:messageModel];
+    
+    return CGSizeMake(self.frame.size.width - 20, messageModel.height);
 }
 
 /**
@@ -123,7 +141,7 @@ static NSString * CellIdentifier = @"GradientCell";
  *  @return
  */
 -(UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
-    return UIEdgeInsetsMake(0, 10, 0, 10);
+    return UIEdgeInsetsMake(0, 10, 20, 10);
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
@@ -131,7 +149,7 @@ static NSString * CellIdentifier = @"GradientCell";
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
-    return 1.0;
+    return 10.0;
 }
 
 @end

@@ -7,7 +7,7 @@
 //
 
 #import "ZViewController.h"
-#import "ZMessageKit.h"
+
 
 @implementation ZViewController
 
@@ -18,22 +18,37 @@
     self.edgesForExtendedLayout = UIRectEdgeNone;
     self.extendedLayoutIncludesOpaqueBars = NO;
     self.modalPresentationCapturesStatusBarAppearance = NO;
-    
     self.modalPresentationStyle = UIModalPresentationOverCurrentContext;
-    
-    self.view.backgroundColor = [UIColor redColor];
+    self.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
 
     
     ZMessageKit *messageView = [[ZMessageKit alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height -  64)];
-    
+    messageView.messageDelegate = self;
     messageView.style.messageFont = [UIFont systemFontOfSize:12.0];
     [self.view addSubview:messageView];
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+#pragma mark - ZMessageDelegate
+
+- (NSInteger)numberOfItemsInMessageKit {
+    
+    return 100;
 }
 
+
+- (ZMessageModel *)messageModelOfItems:(NSIndexPath *)indexPath messageModel:(ZMessageModel *)messageModel {
+    
+    if ((indexPath.row % 2)) {
+        messageModel.mySelf = YES;
+    } else {
+
+
+        messageModel.mySelf = NO;
+    }
+    
+//    messageModel.height = 200;
+    messageModel.messages = @"UICollectionView";
+    
+    return messageModel;
+}
 @end

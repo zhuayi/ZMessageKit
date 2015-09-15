@@ -97,6 +97,9 @@
     if (_messageModel.mySelf) {
         _imageView.left = self.width - _imageView.width;
         _messageLabel.right = _imageView.right - _imageView.width - 5;
+    } else {
+        _imageView.left = 0;
+        _messageLabel.left = CGRectGetMaxX(_imageView.frame) + 5;
     }
     
 }

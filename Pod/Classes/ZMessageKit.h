@@ -8,8 +8,23 @@
 
 #import <UIKit/UIKit.h>
 #import "ZMessageStyle.h"
+#import "ZMessageModel.h"
+@protocol ZMessageDelegate <NSObject>
 
-@interface ZMessageKit : UICollectionView<UICollectionViewDelegate,UICollectionViewDataSource>
+/**
+ *  消息数
+ *
+ *  @return 
+ */
+- (NSInteger)numberOfItemsInMessageKit;
+
+- (ZMessageModel *)messageModelOfItems:(NSIndexPath *)indexPath messageModel:(ZMessageModel *)messageModel;
+
+@end
+
+@interface ZMessageKit : UIView<UICollectionViewDelegate,UICollectionViewDataSource>
+
+@property (nonatomic, weak) id<ZMessageDelegate> messageDelegate;
 
 @property (nonatomic, strong) ZMessageStyle *style;
 
