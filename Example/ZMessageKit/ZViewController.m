@@ -42,7 +42,7 @@
 
 - (NSInteger)numberOfItemsInMessageKit {
     
-    return 100;
+    return 5;
 }
 
 

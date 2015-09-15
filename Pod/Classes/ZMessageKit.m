@@ -8,7 +8,6 @@
 
 #import "ZMessageKit.h"
 #import "ZMessageViewCell.h"
-#import "ZMessageSendView.h"
 #import "ZMacro.h"
 #import "UIView+Util.h"
 
@@ -30,19 +29,24 @@ static NSString *kfooterIdentifier =  @"kfooterIdentifier";
     if (self) {
         self.backgroundColor = [UIColor whiteColor];
 
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+        
         _messageModelDict = [NSMutableDictionary new];
         
-        ZMessageSendView *sendView = [[ZMessageSendView alloc] initWithFrame:CGRectMake(0, frame.size.height - 50, SCREEN_WIDTH, 50)];
-        [self addSubview:sendView];
-        
+        _sendView = [[ZMessageSendView alloc] initWithFrame:CGRectMake(0, frame.size.height - 39, SCREEN_WIDTH, 39)];
+        _sendView.delegate = self;
+        [self addSubview:_sendView];
         
         UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc]init];
-        _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, self.width, self.height - sendView.height) collectionViewLayout:flowLayout];
+        _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, self.width, self.height - _sendView.height) collectionViewLayout:flowLayout];
         _collectionView.backgroundColor = [UIColor whiteColor];
         [_collectionView registerClass:[ZMessageViewCell class] forCellWithReuseIdentifier:CellIdentifier];
         _collectionView.delegate = self;
         _collectionView.dataSource = self;
         [self addSubview:_collectionView];
+        
+        [self bringSubviewToFront:_sendView];
   
     }
     return self;
@@ -181,4 +185,41 @@ static NSString *kfooterIdentifier =  @"kfooterIdentifier";
     return 10.0;
 }
 
+#pragma mark - textFieldDelegate
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    [_sendView.textField resignFirstResponder];
+}
+
+- (void)keyboardWillShow:(NSNotification*)notification {
+    NSDictionary *userInfo = [notification userInfo];
+    NSValue* aValue = [userInfo objectForKey:UIKeyboardFrameEndUserInfoKey];
+    CGRect keyboardRect = [aValue CGRectValue];
+    
+    _sendView.top = self.height - keyboardRect.size.height - _sendView.height;
+    
+    _collectionView.height = _sendView.top;
+    _collectionView.userInteractionEnabled = NO;
+    
+    [self scrollToBottom:NO];
+    
+}
+
+- (void)keyboardWillHide:(NSNotification*)notification {
+    
+    _sendView.top = self.height - _sendView.height;
+    _collectionView.height = _sendView.top;
+    _collectionView.userInteractionEnabled = YES;
+}
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString*)string {
+    
+    [textField resignFirstResponder];
+    return YES;
+}
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+
+    [self scrollToBottom:YES];
+}
 @end

@@ -10,4 +10,26 @@
 
 @interface ZMessageSendView : UIView
 
+@property (nonatomic, weak) id<UITextFieldDelegate> delegate;
+
+/**
+ *  语音按钮
+ */
+@property (nonatomic, strong) UIButton *voiceButton;
+
+/**
+ *  发送其他类型
+ */
+@property (nonatomic, strong) UIButton *sendOtherButton;
+
+/**
+ *  头像按钮
+ */
+@property (nonatomic, strong) UIButton *faceButton;
+
+/**
+ *  文本框
+ */
+@property (nonatomic, strong) UITextField *textField;
+
 @end

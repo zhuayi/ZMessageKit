@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "ZMessageStyle.h"
 #import "ZMessageModel.h"
+#import "ZMessageSendView.h"
 @protocol ZMessageDelegate <NSObject>
 
 /**
@@ -22,7 +23,7 @@
 
 @end
 
-@interface ZMessageKit : UIView<UICollectionViewDelegate,UICollectionViewDataSource>
+@interface ZMessageKit : UIView<UICollectionViewDelegate,UICollectionViewDataSource,UITextFieldDelegate>
 
 /**
  *  代理方法
@@ -39,6 +40,10 @@
  */
 @property (nonatomic, strong) UICollectionView *collectionView;
 
+/**
+ *  发送消息框
+ */
+@property (nonatomic, strong) ZMessageSendView *sendView;
 /**
  *  新增消息
  *
