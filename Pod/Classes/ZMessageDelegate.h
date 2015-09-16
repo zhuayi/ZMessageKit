@@ -18,6 +18,15 @@
  */
 - (void)didfinishSendMessage:(NSArray *)messageModelArray;
 
+/**
+ *  相机不可用
+ */
+- (void)didCameraUnavailable;
+
+/**
+ *  相册不可用
+ */
+- (void)didPhotoLibraryUnavailable;
 @end
 
 
@@ -36,5 +45,15 @@
  *  @param imageArray 
  */
 - (void)didSendImageMessage:(NSArray *)imageArray;
+
+/**
+ *  相机不可用
+ */
+- (void)didCameraUnavailable;
+
+/**
+ *  相册不可用
+ */
+- (void)didPhotoLibraryUnavailable;
 
 @end

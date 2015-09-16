@@ -60,12 +60,7 @@
         } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
             
             if (image && finished) {
-                _messageSize = image.size;
-                if (_messageSize.width > 180) {
-                    CGFloat originalWidth = _messageSize.width;
-                    _messageSize.width = 180;
-                    _messageSize.height /= (originalWidth / 180);
-                }
+                _messageSize = [self getMessageSizeWithImage:image] ;
                 finishedDownImage = YES;
             }
         }];
@@ -80,16 +75,28 @@
     // 设置图片高度
     if (_messageOptions == ZMessageImageMessage) {
         
-        UIImage *image = (UIImage *)_messages;
-        _messageSize = image.size;
-        if (_messageSize.width > 180) {
-            CGFloat originalWidth = _messageSize.width;
-            _messageSize.width = 180;
-            _messageSize.height /= (originalWidth / 180);
-        }
+        _messageSize = [self getMessageSizeWithImage:(UIImage *)_messages] ;
         finishedDownImage = YES;
     }
+}
 
+- (CGSize)getMessageSizeWithImage:(UIImage *)image {
+    
+    CGSize size = image.size;
+    if (size.width > 180) {
+        CGFloat originalWidth = size.width;
+        size.width = 180;
+        size.height /= (originalWidth / 180);
+    }
+    
+    CGFloat originalHeight = size.height;
+    if (size.height > 180) {
+        
+        size.height = 180;
+        size.width /= (originalHeight / 180);
+    }
+    
+    return size;
 }
 
 @end

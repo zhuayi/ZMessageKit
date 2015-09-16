@@ -61,13 +61,24 @@
 - (void)rightButtonAction {
     
     ZMessageModel *messageModel = [[ZMessageModel alloc] init];
-    [messageModel setMessages:@"http://avatar.csdn.net/4/8/6/1_doubleuto.jpg" messageOptions:ZMessageImageUrlMessage];
+    [messageModel setMessages:@"面的东西是编写自定义的表情键盘,话不多说,开门见山吧!下面主要用到的知识有MVC" messageOptions:ZMessageTextMessage];
     messageModel.faceUrl = [NSURL URLWithString:@"http://tp2.sinaimg.cn/1243861097/50/5679886030/1"];
     
     [_messageView insertMessageWithArray:@[messageModel]];
 }
 
 #pragma mark - ZMessageDelegate
+
+- (void)didCameraUnavailable {
+    
+    //如果没有提示用户
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Tip" message:@"Your device don't have camera" delegate:nil cancelButtonTitle:@"Sure" otherButtonTitles:nil];
+    [alert show];
+}
+
+- (void)didPhotoLibraryUnavailable {
+    
+}
 
 - (void)didfinishSendMessage:(NSArray *)messageModelArray{
     

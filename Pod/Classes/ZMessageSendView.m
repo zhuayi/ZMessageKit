@@ -25,9 +25,17 @@
         [self addSubview:self.sendOtherButton];
         [self addSubview:self.voiceButton];
         
-        _textField = [[UITextField alloc] initWithFrame:CGRectMake(5 + 30 + 5, (self.height - 30) / 2, self.width - 3 * 34, 30)];
+        _textField = [[UITextView alloc] initWithFrame:CGRectMake(5 + 30 + 5, (self.height - 30) / 2, self.width - 3 * 34, 30)];
+        _textField.autoresizingMask = UIViewAutoresizingFlexibleHeight;
+//        _textField.keyboardType = UIKeyboardTypeTwitter;
+        _textField.autocorrectionType = UITextAutocorrectionTypeNo;
+        _textField.layer.cornerRadius = 4;
+        _textField.layer.masksToBounds = YES;
         _textField.delegate = self;
-        [_textField setBorderStyle:UITextBorderStyleRoundedRect];
+        _textField.layer.borderWidth = 1;
+        _textField.layer.borderColor = [[[UIColor lightGrayColor] colorWithAlphaComponent:0.4] CGColor];
+//        _textField.adjustsFontSizeToFitWidth = YES;
+//        [_textField setBorderStyle:UITextBorderStyleRoundedRect];
         [self addSubview:_textField];
     }
     return self;
@@ -80,10 +88,12 @@
 #pragma mark - ZCameraViewDelegate
 - (void)didCameraUnavailable {
     
+    [_delegate didCameraUnavailable];
 }
 
 - (void)didPhotoLibraryUnavailable {
     
+    [_delegate didPhotoLibraryUnavailable];
 }
 
 - (void)didDismissViewController {
@@ -91,7 +101,7 @@
 }
 
 - (void)didSendPhotoWidthImage:(UIImage *)image {
-    
+    [_delegate didSendImageMessage:@[image]];
 }
 
 - (void)didSendPhotoWithImageArray:(NSArray *)imageArry {
@@ -102,6 +112,16 @@
 }
 
 #pragma mark -textFieldDelegate
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
+    if ([text isEqualToString:@"\n"]){ //判断输入的字是否是回车，即按下return
+        //在这里做你响应return键的代码
+        [_delegate didSendTextMessage:textView.text];
+        textView.text = @"";
+        return NO; //这里返回NO，就代表return键值失效，即页面上按下return，不会出现换行，如果为yes，则输入页面会换行
+    }
+    
+    return YES;
+}
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString*)string {
     
     NSString *text = [textField.text stringByReplacingCharactersInRange:range withString:string];

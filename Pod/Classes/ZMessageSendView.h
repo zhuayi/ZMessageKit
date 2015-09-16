@@ -10,7 +10,7 @@
 #import "ZMessageDelegate.h"
 #import "ZCameraViewManager.h"
 
-@interface ZMessageSendView : UIView<UITextFieldDelegate, ZCameraViewDelegate>
+@interface ZMessageSendView : UIView<UITextViewDelegate, ZCameraViewDelegate>
 
 /**
  *  代理方法
@@ -35,6 +35,6 @@
 /**
  *  文本框
  */
-@property (nonatomic, strong) UITextField *textField;
+@property (nonatomic, strong) UITextView *textField;
 
 @end

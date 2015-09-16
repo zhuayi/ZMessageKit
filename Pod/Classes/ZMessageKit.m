@@ -69,13 +69,6 @@ static NSString *kfooterIdentifier =  @"kfooterIdentifier";
     return [ZMessageStyle sharedManager];
 }
 
-- (void)didMoveToWindow {
-    [super didMoveToWindow];
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self scrollToBottom:NO];
-    });
-}
-
 
 /**
  *  滚动到底部
@@ -87,7 +80,6 @@ static NSString *kfooterIdentifier =  @"kfooterIdentifier";
         [_collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:lastItemIndex inSection:0] atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:animated];
     }
 }
-
 
 - (void)insertMessageWithArray:(NSArray *)messageArray {
     
@@ -330,7 +322,6 @@ static NSString *kfooterIdentifier =  @"kfooterIdentifier";
         ZMessageModel *messageModel = [[ZMessageModel alloc] init];
         [messageModel setMessages:imageArray[i] messageOptions:ZMessageImageMessage];
         messageModel.mySelf = YES;
-        messageModel.faceUrl = [NSURL URLWithString:@"http://tp4.sinaimg.cn/1753070263/50/5703349473/1"];
         [newMessageArray addObject:messageModel];
     }
     
@@ -339,6 +330,15 @@ static NSString *kfooterIdentifier =  @"kfooterIdentifier";
     [_delegate didfinishSendMessage:newMessageArray];
 }
 
+- (void)didCameraUnavailable {
+    
+    [_delegate didCameraUnavailable];
+}
+
+- (void)didPhotoLibraryUnavailable {
+    
+    [_delegate didPhotoLibraryUnavailable];
+}
 
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
