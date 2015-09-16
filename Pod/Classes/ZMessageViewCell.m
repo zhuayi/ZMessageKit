@@ -57,10 +57,6 @@
     return self;
 }
 
-- (void)didMoveToWindow {
-    [super didMoveToWindow];
-}
-
 /**
  *  图片消息内容
  *
@@ -87,16 +83,16 @@
     [_backview setTitle:@"" forState:UIControlStateNormal];
     
     self.messageImageView.hidden = YES;
-    
+    _backview.userInteractionEnabled = NO;
     _backview.size = _messageModel.messageSize;
     
     // 文本消息
-    if ([messageModel.messages isKindOfClass:[NSString class]]) {
+    if (messageModel.messageOptions == ZMessageTextMessage) {
         [_backview setTitle:(NSString *)_messageModel.messages forState:UIControlStateNormal];
     }
     
     // 图片消息
-    if ([messageModel.messages isKindOfClass:[NSURL class]]) {
+    if (messageModel.messageOptions == ZMessageImageMessage) {
         [self.messageImageView sd_setImageWithURL:(NSURL *)_messageModel.messages];
         self.messageImageView.hidden = NO;
         self.messageImageView.size = _messageModel.messageSize;
@@ -108,9 +104,11 @@
         }
         _imageViewMask.frame = CGRectInset(_messageImageView.frame, 0.0f, 0.0f);
         _messageImageView.layer.mask = _imageViewMask.layer;
+        _backview.userInteractionEnabled = YES;
     }
     
     
+    // 设置气泡类型, 左右
     if (_messageModel.mySelf) {
         _faceView.left = self.width - _faceView.width;
         _backview.right = _faceView.right - _faceView.width - 5;

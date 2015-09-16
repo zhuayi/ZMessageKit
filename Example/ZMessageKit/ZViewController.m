@@ -43,11 +43,11 @@
         if (i %2) {
             messageModel.mySelf = YES;
             messageModel.faceUrl = [NSURL URLWithString:@"http://tp4.sinaimg.cn/1753070263/50/5703349473/1"];
-            messageModel.messages = [NSURL URLWithString:@"http://ww4.sinaimg.cn/bmiddle/a716fd45jw1ew3j8kszwuj20q20iu0yh.jpg"];
+            [messageModel setMessages:@"http://ww4.sinaimg.cn/bmiddle/a716fd45jw1ew3j8kszwuj20q20iu0yh.jpg" messageOptions:ZMessageImageMessage];
             
         } else {
             messageModel.faceUrl = [NSURL URLWithString:@"http://tp2.sinaimg.cn/1243861097/50/5679886030/1"];
-            messageModel.messages = [NSURL URLWithString:@"http://ww2.sinaimg.cn/thumbnail/c0320848jw1ew428x1exyj20u01hcn7f.jpg"];
+            [messageModel setMessages:@"http://ww2.sinaimg.cn/thumbnail/c0320848jw1ew428x1exyj20u01hcn7f.jpg" messageOptions:ZMessageImageMessage];
         }
         
         [_dataArray addObject:messageModel];
@@ -61,7 +61,7 @@
 - (void)rightButtonAction {
     
     ZMessageModel *messageModel = [[ZMessageModel alloc] init];
-    messageModel.messages = [NSURL URLWithString:@"http://avatar.csdn.net/4/8/6/1_doubleuto.jpg"];
+    [messageModel setMessages:@"http://avatar.csdn.net/4/8/6/1_doubleuto.jpg" messageOptions:ZMessageImageMessage];
     messageModel.faceUrl = [NSURL URLWithString:@"http://tp2.sinaimg.cn/1243861097/50/5679886030/1"];
     
     [_messageView insertMessageWithArray:@[messageModel]];
@@ -69,16 +69,10 @@
 
 #pragma mark - ZMessageDelegate
 
-- (ZMessageModel *)messageModelOfItems:(NSIndexPath *)indexPath {
-    
-    return _dataArray[indexPath.row];
-}
-
-
 - (void)didSendMessage:(NSObject*)message {
     
     ZMessageModel *messageModel = [[ZMessageModel alloc] init];
-    messageModel.messages = message;
+    [messageModel setMessages:message messageOptions:ZMessageTextMessage];
     messageModel.mySelf = YES;
     messageModel.faceUrl = [NSURL URLWithString:@"http://tp4.sinaimg.cn/1753070263/50/5703349473/1"];
     [_messageView insertMessageWithArray:@[messageModel]];

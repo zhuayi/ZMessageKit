@@ -7,7 +7,6 @@
 //
 
 #import "ZMessageModel.h"
-#import "UIImageView+WebCache.h"
 #import "ZMessageStyle.h"
 #import "ZMacro.h"
 #import "SDWebImageManager.h"
@@ -25,10 +24,15 @@
     return self;
 }
 
+- (void)setMessages:(NSObject *)messages messageOptions:(ZMessageOptions)messageOptions {
+    _messages = messages;
+    _messageOptions = messageOptions;
+}
+
 - (void)resetMessageSize {
     
     // 获取文本内容的高度;
-    if ([_messages isKindOfClass:[NSString class]]) {
+    if (_messageOptions == ZMessageTextMessage) {
 
         NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
         [paragraphStyle setLineSpacing:10];
@@ -48,46 +52,30 @@
     }
 
     // 设置图片高度
-    if ([_messages isKindOfClass:[NSURL class]]) {
+    if (_messageOptions == ZMessageImageMessage) {
 
         SDWebImageManager *manger = [SDWebImageManager sharedManager];
-        UIImage *image = [manger.imageCache imageFromDiskCacheForKey:[manger cacheKeyForURL:(NSURL *)_messages]];
-        if (image) {
+        [manger downloadImageWithURL:[NSURL URLWithString:_messages] options:SDWebImageLowPriority progress:^(NSInteger receivedSize, NSInteger expectedSize) {
             
-            _messageSize = image.size;
-            if (_messageSize.width > 180) {
-                CGFloat originalWidth = _messageSize.width;
-                _messageSize.width = 180;
-                _messageSize.height /= (originalWidth / 180);
-            }
-        } else  {
-         
-            [manger downloadImageWithURL:(NSURL *)_messages options:SDWebImageLowPriority progress:^(NSInteger receivedSize, NSInteger expectedSize) {
-                
-            } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
-                
-                if (image && finished) {
-                    _messageSize = image.size;
-                    if (_messageSize.width > 180) {
-                        CGFloat originalWidth = _messageSize.width;
-                        _messageSize.width = 180;
-                        _messageSize.height /= (originalWidth / 180);
-                    }
-                    finishedDownImage = YES;
+        } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
+            
+            if (image && finished) {
+                _messageSize = image.size;
+                if (_messageSize.width > 180) {
+                    CGFloat originalWidth = _messageSize.width;
+                    _messageSize.width = 180;
+                    _messageSize.height /= (originalWidth / 180);
                 }
-                
-            }];
-            
-            
-            while (!finishedDownImage) {
-                
-                [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
+                finishedDownImage = YES;
             }
+        }];
+        
+        while (!finishedDownImage) {
+            
+            [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
         }
-
     }
 
-    
 }
 
 @end
