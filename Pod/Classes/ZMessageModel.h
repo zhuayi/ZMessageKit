@@ -23,4 +23,9 @@
 
 @property (nonatomic, assign) CGFloat height;
 
+/**
+ *  头像地址
+ */
+@property (nonatomic, strong) NSURL *faceUrl;
+
 @end

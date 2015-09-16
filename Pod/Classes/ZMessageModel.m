@@ -35,9 +35,5 @@
                                                          context:nil];
         _height = size.size.height + 20;
     }
-    
-    
-    
-    
 }
 @end

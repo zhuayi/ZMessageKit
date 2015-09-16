@@ -12,6 +12,10 @@
 @implementation ZViewController {
     
     ZMessageKit *_messageView;
+    
+    NSMutableArray *_dataArray;
+    
+    int _newMessageCount;
 }
 
 - (void)viewDidLoad {
@@ -31,40 +35,57 @@
     [self.view addSubview:_messageView];
 
     self.rightButton.title = @"新增数据";
+    
+
+    
+    _dataArray = [NSMutableArray new];
+    for (int i = 0 ; i < 500; i++) {
+        ZMessageModel *messageModel = [[ZMessageModel alloc] init];
+        messageModel.messages = @"UICollectionView is ";
+        if (i %2) {
+            messageModel.mySelf = YES;
+            messageModel.faceUrl = [NSURL URLWithString:@"http://tp4.sinaimg.cn/1753070263/50/5703349473/1"];
+        } else {
+            messageModel.faceUrl = [NSURL URLWithString:@"http://tp2.sinaimg.cn/1243861097/50/5679886030/1"];
+        }
+        
+        [_dataArray addObject:messageModel];
+    }
+    
+    NSLog(@"_dataArray is %@", _dataArray);
 }
 
 - (void)rightButtonAction {
     
-    [_messageView insertMessage:(arc4random() % 10) + 1];
+    ZMessageModel *messageModel = [[ZMessageModel alloc] init];
+    messageModel.messages = @"我是新增的测试的";
+    messageModel.faceUrl = [NSURL URLWithString:@"http://tp2.sinaimg.cn/1243861097/50/5679886030/1"];
+    [_dataArray addObject:messageModel];
+    
+    [_messageView insertMessage:1];
 }
 
 #pragma mark - ZMessageDelegate
 
 - (NSInteger)numberOfItemsInMessageKit {
     
-    return 5;
+    return _dataArray.count;
 }
 
 
-- (ZMessageModel *)messageModelOfItems:(NSIndexPath *)indexPath messageModel:(ZMessageModel *)messageModel {
+- (ZMessageModel *)messageModelOfItems:(NSIndexPath *)indexPath {
     
-    NSLog(@"indexPath.row is %ld", indexPath.row);
-    if ((indexPath.row % 2)) {
-        messageModel.mySelf = YES;
-    } else {
-
-
-        messageModel.mySelf = NO;
-    }
-    
-    messageModel.messages = [NSString stringWithFormat:@"UICollectionView is :%ld", indexPath.row];
-    
-    return messageModel;
+    return _dataArray[indexPath.row];
 }
 
 
 - (void)didSendMessage:(NSObject*)message {
     
+    ZMessageModel *messageModel = [[ZMessageModel alloc] init];
+    messageModel.messages = message;
+    messageModel.mySelf = YES;
+    messageModel.faceUrl = [NSURL URLWithString:@"http://tp4.sinaimg.cn/1753070263/50/5703349473/1"];
+    [_dataArray addObject:messageModel];
     [_messageView insertMessage:1];
 }
 @end

@@ -41,6 +41,12 @@
 - (void)insertMessage:(NSInteger)count;
 
 /**
+ *  添加新数据
+ *
+ *  @param messageArray 
+ */
+- (void)insertMessageWithArray:(NSArray *)messageArray;
+/**
  *  滚动到底部
  */
 - (void)scrollToBottom:(BOOL)animated;

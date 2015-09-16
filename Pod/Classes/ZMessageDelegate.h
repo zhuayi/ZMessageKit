@@ -27,7 +27,7 @@
  *
  *  @return
  */
-- (ZMessageModel *)messageModelOfItems:(NSIndexPath *)indexPath messageModel:(ZMessageModel *)messageModel;
+- (ZMessageModel *)messageModelOfItems:(NSIndexPath *)indexPath;
 
 /**
  *  发送消息

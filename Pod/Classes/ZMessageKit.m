@@ -59,8 +59,8 @@ static NSString *kfooterIdentifier =  @"kfooterIdentifier";
     return [ZMessageStyle sharedManager];
 }
 
-- (void)didMoveToSuperview {
-    [super didMoveToSuperview];
+- (void)didMoveToWindow {
+    [super didMoveToWindow];
     
     _dataCount = [_delegate numberOfItemsInMessageKit];
     [self scrollToBottom:NO];
@@ -71,28 +71,65 @@ static NSString *kfooterIdentifier =  @"kfooterIdentifier";
  */
 - (void)scrollToBottom:(BOOL)animated {
     
-    [_collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:(_dataCount - 1) inSection:0] atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:animated];
+    NSInteger lastItemIndex = _dataCount - 1;
+    if (lastItemIndex < 0) {
+        lastItemIndex = 0;
+    }
+    [_collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:lastItemIndex inSection:0] atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:animated];
 }
 
-- (void)insertMessage:(NSInteger)count {
-
-    _dataCount += count;
+/**
+ *  添加新数据
+ *
+ *  @param messageArray 
+ */
+- (void)insertMessageWithArray:(NSArray *)messageArray {
     
     NSMutableArray *array = [NSMutableArray new];
     
-    for (int i = 0 ; i < count; i++) {
+    for (NSInteger index = _dataCount; index < (_dataCount + messageArray.count); index++) {
         
-        [array addObject:[NSIndexPath indexPathForItem:_dataCount - i - 1 inSection:0]];
+        ZMessageModel *messageModel = [[ZMessageModel alloc] init];
+        messageModel.messages = messageArray[_dataCount - index];
+        [_messageModelDict setObject:messageModel forKey:@(index)];
+        
+        [array addObject:[NSIndexPath indexPathForRow:index inSection:0]];
     }
+    
+    __weak UICollectionView *__collectionView = _collectionView;
     [_collectionView performBatchUpdates:^{
         
-        [_collectionView insertItemsAtIndexPaths:array];
+        [__collectionView insertItemsAtIndexPaths:array];
         
     } completion:^(BOOL finished) {
         
         [self scrollToBottom:YES];
         
     }];
+    
+}
+
+- (void)insertMessage:(NSInteger)count {
+
+    NSMutableArray *array = [NSMutableArray new];
+    
+    for (NSInteger index = _dataCount; index < (_dataCount + count); index++) {
+        [array addObject:[NSIndexPath indexPathForRow:index inSection:0]];
+    }
+
+    NSLog(@"array is %@", array);
+    
+    __weak UICollectionView *__collectionView = _collectionView;
+    [_collectionView performBatchUpdates:^{
+        
+        [__collectionView insertItemsAtIndexPaths:array];
+        
+    } completion:^(BOOL finished) {
+        
+        [self scrollToBottom:YES];
+        
+    }];
+    
     
 }
 
@@ -107,6 +144,7 @@ static NSString *kfooterIdentifier =  @"kfooterIdentifier";
  *  @return
  */
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    _dataCount = [_delegate numberOfItemsInMessageKit];
     return _dataCount;
 }
 
@@ -133,9 +171,7 @@ static NSString *kfooterIdentifier =  @"kfooterIdentifier";
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
     ZMessageViewCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:CellIdentifier forIndexPath:indexPath];
-    
     cell.messageModel = _messageModelDict[@(indexPath.row)];
-    
     return cell;
 }
 
@@ -157,12 +193,10 @@ static NSString *kfooterIdentifier =  @"kfooterIdentifier";
     
     messageModel = _messageModelDict[@(indexPath.row)];
     if (messageModel == nil) {
-        messageModel = [[ZMessageModel alloc] init];
+        messageModel = [_delegate messageModelOfItems:indexPath];
         [_messageModelDict setObject:messageModel forKey:@(indexPath.row)];
     }
    
-    messageModel = [_delegate messageModelOfItems:indexPath messageModel:messageModel];
-
     return CGSizeMake(self.frame.size.width - 20, messageModel.height);
 }
 
@@ -234,6 +268,8 @@ static NSString *kfooterIdentifier =  @"kfooterIdentifier";
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     
+    [_messageModelDict removeAllObjects];
+    _messageModelDict = nil;
     NSLog(@"%s",  __func__);
 }
 @end

@@ -36,11 +36,12 @@
         _imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 10, 40, 40)];
         _imageView.backgroundColor = [UIColor grayColor];
         [self addSubview:_imageView];
-        
-        
-        
     }
     return self;
+}
+
+- (void)didMoveToWindow {
+    [super didMoveToWindow];
 }
 
 /**
@@ -63,6 +64,7 @@
     return _messageLabel;
 }
 
+
 /**
  *  图片消息内容
  *
@@ -80,6 +82,9 @@
 
 - (void)setMessageModel:(ZMessageModel *)messageModel {
     _messageModel = messageModel;
+    
+    [_imageView sd_setImageWithURL:_messageModel.faceUrl];
+
     
     // 文本消息
     if ([messageModel.messages isKindOfClass:[NSString class]]) {
