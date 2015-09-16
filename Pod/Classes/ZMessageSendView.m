@@ -48,6 +48,8 @@
     if (_sendOtherButton == nil) {
         
         _sendOtherButton = [[UIButton alloc] initWithFrame:CGRectMake(self.width - 30, (self.height - 30 ) / 2, 30, 30)];
+        
+        [_sendOtherButton addTarget:self action:@selector(gotoCamera) forControlEvents:UIControlEventTouchUpInside];
         [_sendOtherButton setBackgroundImage:[UIImage imageNamed:@"sendotherHigh"] forState:UIControlStateHighlighted];
         [_sendOtherButton setBackgroundImage:[UIImage imageNamed:@"sendother"] forState:UIControlStateNormal];
     }
@@ -65,6 +67,43 @@
 }
 
 
+- (void)gotoCamera {
+    
+    [_textField resignFirstResponder];
+    ZCameraViewManager *camera = [[ZCameraViewManager alloc] init];
+    camera.delegate = self;
+    camera.maximum = 9;
+    camera.threshold = 0;
+    camera.multiple = NO;
+    camera.allowsEditing = NO;
+    [camera show];
+}
+
+#pragma mark - ZCameraViewDelegate
+- (void)didCameraUnavailable {
+    
+}
+
+- (void)didPhotoLibraryUnavailable {
+    
+}
+
+- (void)didDismissViewController {
+    
+}
+
+- (void)didSendPhotoWidthImage:(UIImage *)image {
+    
+    [_delegate didSendMessage:image messageOptions:ZMessageImageMessage];
+}
+
+- (void)didSendPhotoWithImageArray:(NSArray *)imageArry {
+    
+    [_delegate didSendMessage:imageArry[0] messageOptions:ZMessageImageMessage];
+    NSLog(@"imageArry is %@", imageArry);
+}
+
+#pragma mark -textFieldDelegate
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString*)string {
     
     NSString *text = [textField.text stringByReplacingCharactersInRange:range withString:string];
@@ -78,7 +117,7 @@
         return NO;
     }
     
-    [_delegate didSendMessage:textField.text];
+    [_delegate didSendMessage:textField.text messageOptions:ZMessageTextMessage];
     _textField.text = @"";
     return YES;
 }

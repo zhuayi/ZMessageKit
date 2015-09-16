@@ -52,10 +52,10 @@
     }
 
     // 设置图片高度
-    if (_messageOptions == ZMessageImageMessage) {
+    if (_messageOptions == ZMessageImageUrlMessage) {
 
         SDWebImageManager *manger = [SDWebImageManager sharedManager];
-        [manger downloadImageWithURL:[NSURL URLWithString:_messages] options:SDWebImageLowPriority progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+        [manger downloadImageWithURL:[NSURL URLWithString:(NSString *)_messages] options:SDWebImageLowPriority progress:^(NSInteger receivedSize, NSInteger expectedSize) {
             
         } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
             
@@ -74,6 +74,20 @@
             
             [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
         }
+    }
+    
+    
+    // 设置图片高度
+    if (_messageOptions == ZMessageImageMessage) {
+        
+        UIImage *image = (UIImage *)_messages;
+        _messageSize = image.size;
+        if (_messageSize.width > 180) {
+            CGFloat originalWidth = _messageSize.width;
+            _messageSize.width = 180;
+            _messageSize.height /= (originalWidth / 180);
+        }
+        finishedDownImage = YES;
     }
 
 }

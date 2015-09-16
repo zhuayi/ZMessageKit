@@ -13,8 +13,11 @@ typedef NS_OPTIONS(NSUInteger, ZMessageOptions) {
     // 文本消息
     ZMessageTextMessage = 1 << 0,
     
-    // 图片消息
-    ZMessageImageMessage = 1 << 1
+    // 远程图片消息
+    ZMessageImageUrlMessage = 1 << 1,
+    
+    // 本地图片消息
+    ZMessageImageMessage = 1 << 2,
     
 };
 

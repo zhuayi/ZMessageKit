@@ -91,8 +91,8 @@
         [_backview setTitle:(NSString *)_messageModel.messages forState:UIControlStateNormal];
     }
     
-    // 图片消息
-    if (messageModel.messageOptions == ZMessageImageMessage) {
+    // 远程图片消息
+    if (messageModel.messageOptions == ZMessageImageUrlMessage) {
         [self.messageImageView sd_setImageWithURL:(NSURL *)_messageModel.messages];
         self.messageImageView.hidden = NO;
         self.messageImageView.size = _messageModel.messageSize;
@@ -107,21 +107,34 @@
         _backview.userInteractionEnabled = YES;
     }
     
+    // 本地图片消息
+    if (messageModel.messageOptions == ZMessageImageMessage) {
+        self.messageImageView.image = (UIImage *)_messageModel.messages;
+        self.messageImageView.hidden = NO;
+        self.messageImageView.size = _messageModel.messageSize;
+        if (_messageModel.mySelf) {
+            
+            _imageViewMask.image = _messageBackImage;
+        } else {
+            _imageViewMask.image = _messageBackHighImage;
+        }
+        _imageViewMask.frame = CGRectInset(_messageImageView.frame, 0.0f, 0.0f);
+        _messageImageView.layer.mask = _imageViewMask.layer;
+        _backview.userInteractionEnabled = YES;
+    }
+    
     
     // 设置气泡类型, 左右
     if (_messageModel.mySelf) {
         _faceView.left = self.width - _faceView.width;
         _backview.right = _faceView.right - _faceView.width - 5;
+        _backview.contentEdgeInsets = UIEdgeInsetsMake(5, 5, 5, 15);
     } else {
         _faceView.left = 0;
         _backview.left = CGRectGetMaxX(_faceView.frame) + 5;
-    }
-    
-    if (_messageModel.mySelf) {
-        _backview.contentEdgeInsets = UIEdgeInsetsMake(5, 5, 5, 15);
-    } else {
         _backview.contentEdgeInsets = UIEdgeInsetsMake(5, 15, 5, 5);
     }
+    
     _backview.selected = !_messageModel.mySelf;
 }
 

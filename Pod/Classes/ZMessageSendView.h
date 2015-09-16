@@ -8,7 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "ZMessageDelegate.h"
-@interface ZMessageSendView : UIView<UITextFieldDelegate>
+#import "ZCameraViewManager.h"
+
+@interface ZMessageSendView : UIView<UITextFieldDelegate, ZCameraViewDelegate>
 
 /**
  *  代理方法

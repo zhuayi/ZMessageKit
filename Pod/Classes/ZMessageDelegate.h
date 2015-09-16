@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-@class ZMessageModel;
+#import "ZMessageModel.h"
 
 @protocol ZMessageDelegate <NSObject>
 
@@ -16,6 +16,6 @@
  *
  *  @param message 
  */
-- (void)didSendMessage:(NSObject *)message;
+- (void)didSendMessage:(NSObject *)message messageOptions:(ZMessageOptions)messageOptions;
 
 @end
