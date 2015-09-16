@@ -197,7 +197,7 @@ static NSString *kfooterIdentifier =  @"kfooterIdentifier";
         [_messageModelDict setObject:messageModel forKey:@(indexPath.row)];
     }
    
-    return CGSizeMake(self.frame.size.width - 20, messageModel.height);
+    return CGSizeMake(self.frame.size.width - 20, messageModel.messageSize.height);
 }
 
 

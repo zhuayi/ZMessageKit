@@ -31,17 +31,15 @@
     
     _messageView = [[ZMessageKit alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height -  64)];
     _messageView.delegate = self;
-    _messageView.style.messageFont = [UIFont systemFontOfSize:12.0];
+    _messageView.style.messageFont = [UIFont systemFontOfSize:14.0];
     [self.view addSubview:_messageView];
 
     self.rightButton.title = @"新增数据";
-    
 
-    
     _dataArray = [NSMutableArray new];
     for (int i = 0 ; i < 500; i++) {
         ZMessageModel *messageModel = [[ZMessageModel alloc] init];
-        messageModel.messages = @"UICollectionView is ";
+        messageModel.messages = [NSURL URLWithString:@"http://tp2.sinaimg.cn/1243861097/50/5679886030/1"];
         if (i %2) {
             messageModel.mySelf = YES;
             messageModel.faceUrl = [NSURL URLWithString:@"http://tp4.sinaimg.cn/1753070263/50/5703349473/1"];
@@ -51,6 +49,7 @@
         
         [_dataArray addObject:messageModel];
     }
+    
     
     NSLog(@"_dataArray is %@", _dataArray);
 }

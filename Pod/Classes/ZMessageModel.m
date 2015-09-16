@@ -17,23 +17,33 @@
 - (void)setMessages:(NSObject *)messages {
     
     _messages = messages;
-    
-    if (_height > 0) {
-        
-        return ;
-    }
-    
+ 
     // 获取文本内容的高度;
     if ([messages isKindOfClass:[NSString class]]) {
         
+        NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+        [paragraphStyle setLineSpacing:10];
         NSDictionary *fontDict = @{
                                    NSFontAttributeName:[ZMessageStyle sharedManager].messageFont,
+                                   NSParagraphStyleAttributeName: paragraphStyle
                                    };
-        CGRect size = [(NSString *)messages boundingRectWithSize:CGSizeMake(200, MAXFLOAT)
+        
+
+        _messageSize = [(NSString *)messages boundingRectWithSize:CGSizeMake(180, CGFLOAT_MAX)
                                                          options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading
                                                       attributes:fontDict
-                                                         context:nil];
-        _height = size.size.height + 20;
+                                                         context:nil].size;
+   
+        _messageSize.height += 20;
+        _messageSize.width += 20;
+    }
+    
+    // 设置图片高度
+    if ([messages isKindOfClass:[NSURL class]]) {
+        
+        _messageSize = CGSizeMake(220, 220);
     }
 }
+
+
 @end

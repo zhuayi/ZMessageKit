@@ -21,7 +21,7 @@
 @property (nonatomic, assign) BOOL mySelf;
 
 
-@property (nonatomic, assign) CGFloat height;
+@property (nonatomic, assign) CGSize messageSize;
 
 /**
  *  头像地址

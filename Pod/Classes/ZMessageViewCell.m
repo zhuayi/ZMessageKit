@@ -13,11 +13,6 @@
 @interface ZMessageViewCell()
 
 /**
- *  文本消息容器
- */
-@property (nonatomic, strong) UILabel *messageLabel;
-
-/**
  *  图片消息容器
  */
 @property (nonatomic, strong) UIImageView *messageImageView;
@@ -26,16 +21,38 @@
 
 @implementation ZMessageViewCell {
   
-    UIImageView *_imageView;
+    UIImageView *_faceView;
+    
+    UIButton *_backview;
+    
+    UIImage *_messageBackImage;
+    UIImage *_messageBackHighImage;
+    
+    UIImageView *_imageViewMask;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
     
-        _imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 10, 40, 40)];
-        _imageView.backgroundColor = [UIColor grayColor];
-        [self addSubview:_imageView];
+        _faceView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 10, 40, 40)];
+        _faceView.backgroundColor = [UIColor grayColor];
+        [self addSubview:_faceView];
+        
+        _messageBackImage = [[UIImage imageNamed:@"chatto_bg_normal"] resizableImageWithCapInsets:UIEdgeInsetsMake(35, 10, 10, 22)];
+        _messageBackHighImage = [[UIImage imageNamed:@"chatfrom_bg_normal"] resizableImageWithCapInsets:UIEdgeInsetsMake(35, 22, 10, 10)];
+        
+        // 设置消息背景
+        _backview = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_backview setBackgroundImage:_messageBackImage forState:UIControlStateNormal];
+        [_backview setBackgroundImage:_messageBackHighImage forState:UIControlStateSelected];
+        _backview.titleLabel.numberOfLines = 0;
+        _backview.top = 5;
+        _backview.titleLabel.font = [ZMessageStyle sharedManager].messageFont;
+        _backview.userInteractionEnabled = NO;
+        [self addSubview:_backview];
+        
+        _imageViewMask = [[UIImageView alloc] init];
     }
     return self;
 }
@@ -45,27 +62,6 @@
 }
 
 /**
- *  文本消息容器
- *
- *  @return UILabel
- */
-- (UILabel *)messageLabel {
-    
-    if (!_messageLabel) {
-        _messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_imageView.frame) + 5, 10, 200, self.height - 20)];
-        _messageLabel.backgroundColor = [UIColor redColor];
-        _messageLabel.textColor = [UIColor blackColor];
-        _messageLabel.numberOfLines = 0;
-        _messageLabel.font = [ZMessageStyle sharedManager].messageFont;
-        _messageLabel.textAlignment = NSTextAlignmentLeft;
-        [self addSubview:_messageLabel];
-    }
-    
-    return _messageLabel;
-}
-
-
-/**
  *  图片消息内容
  *
  *  @return
@@ -73,8 +69,11 @@
 - (UIImageView *)messageImageView {
     if (!_messageImageView) {
         
-        _messageImageView = [[UIImageView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_imageView.frame) + 5, 10, 200, self.height - 20)];
-        [self addSubview:_messageImageView];
+        _messageImageView = [[UIImageView alloc] init];
+        _messageImageView.layer.cornerRadius = 5;
+        _messageImageView.layer.masksToBounds  = YES;
+        _messageImageView.contentMode = UIViewContentModeScaleAspectFill;
+        [_backview addSubview:_messageImageView];
     }
     
     return _messageImageView;
@@ -83,31 +82,51 @@
 - (void)setMessageModel:(ZMessageModel *)messageModel {
     _messageModel = messageModel;
     
-    [_imageView sd_setImageWithURL:_messageModel.faceUrl];
+    [_faceView sd_setImageWithURL:_messageModel.faceUrl];
 
+    [_backview setTitle:@"" forState:UIControlStateNormal];
+    
+    self.messageImageView.hidden = YES;
+    
+    _backview.size = _messageModel.messageSize;
     
     // 文本消息
     if ([messageModel.messages isKindOfClass:[NSString class]]) {
-        self.messageLabel.height = messageModel.height;
-        self.messageLabel.text = (NSString *)_messageModel.messages;
+        [_backview setTitle:(NSString *)_messageModel.messages forState:UIControlStateNormal];
     }
     
     // 图片消息
     if ([messageModel.messages isKindOfClass:[NSURL class]]) {
-//        self.messageImageView.height = messageModel.height;
         [self.messageImageView sd_setImageWithURL:(NSURL *)_messageModel.messages];
+        self.messageImageView.hidden = NO;
+        self.messageImageView.size = _messageModel.messageSize;
+        if (_messageModel.mySelf) {
+            
+            _imageViewMask.image = _messageBackImage;
+        } else {            
+            _imageViewMask.image = _messageBackHighImage;
+        }
+        _imageViewMask.frame = CGRectInset(_messageImageView.frame, 0.0f, 0.0f);
+        _messageImageView.layer.mask = _imageViewMask.layer;
     }
     
     
     if (_messageModel.mySelf) {
-        _imageView.left = self.width - _imageView.width;
-        _messageLabel.right = _imageView.right - _imageView.width - 5;
+        _faceView.left = self.width - _faceView.width;
+        _backview.right = _faceView.right - _faceView.width - 5;
     } else {
-        _imageView.left = 0;
-        _messageLabel.left = CGRectGetMaxX(_imageView.frame) + 5;
+        _faceView.left = 0;
+        _backview.left = CGRectGetMaxX(_faceView.frame) + 5;
     }
     
+    if (_messageModel.mySelf) {
+        _backview.contentEdgeInsets = UIEdgeInsetsMake(5, 5, 5, 15);
+    } else {
+        _backview.contentEdgeInsets = UIEdgeInsetsMake(5, 15, 5, 5);
+    }
+    _backview.selected = !_messageModel.mySelf;
 }
 
 
 @end
+
