@@ -12,24 +12,6 @@
 @protocol ZMessageDelegate <NSObject>
 
 /**
- *  消息数
- *
- *  @return
- */
-- (NSInteger)numberOfItemsInMessageKit;
-
-
-/**
- *  获取对应的index消息
- *
- *  @param indexPath
- *  @param messageModel
- *
- *  @return
- */
-- (ZMessageModel *)messageModelOfItems:(NSIndexPath *)indexPath;
-
-/**
  *  发送消息
  *
  *  @param message 

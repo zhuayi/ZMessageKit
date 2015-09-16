@@ -33,19 +33,16 @@
  *  发送消息框
  */
 @property (nonatomic, strong) ZMessageSendView *sendView;
+
+
 /**
  *  新增消息
  *
- *  @param count 新增消息数
- */
-- (void)insertMessage:(NSInteger)count;
-
-/**
- *  添加新数据
- *
- *  @param messageArray 
+ *  @param count 新增消息数组
  */
 - (void)insertMessageWithArray:(NSArray *)messageArray;
+
+
 /**
  *  滚动到底部
  */

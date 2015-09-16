@@ -4,3 +4,4 @@ platform :ios, '7.0'
 pod 'MWPhotoBrowser', '2.1.1'
 pod 'SDWebImage', '~> 3.7.3'
 pod 'ZComponent', :subspecs => ['ZMacro','Category','ZBaseViewController']
+pod 'MBProgressHUD+BWMExtension', '~> 1.0.0'

@@ -28,4 +28,6 @@
  */
 @property (nonatomic, strong) NSURL *faceUrl;
 
+
+- (void)resetMessageSize;
 @end

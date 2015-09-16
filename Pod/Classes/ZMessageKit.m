@@ -10,14 +10,12 @@
 #import "ZMessageViewCell.h"
 #import "ZMacro.h"
 #import "UIView+Util.h"
+#import "MBProgressHUD+BWMExtension.h"
 
 @implementation ZMessageKit {
     
     // 数据对象字典
     NSMutableDictionary *_messageModelDict;
-    
-    // 数据总数
-    NSInteger _dataCount;
 }
 
 static NSString *CellIdentifier = @"GradientCell";
@@ -28,7 +26,7 @@ static NSString *kfooterIdentifier =  @"kfooterIdentifier";
     self = [super initWithFrame:frame];
     if (self) {
         self.backgroundColor = [UIColor whiteColor];
-
+        
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
         
@@ -46,7 +44,7 @@ static NSString *kfooterIdentifier =  @"kfooterIdentifier";
         [self addSubview:_collectionView];
         
         [self bringSubviewToFront:_sendView];
-  
+        
     }
     return self;
 }
@@ -61,75 +59,69 @@ static NSString *kfooterIdentifier =  @"kfooterIdentifier";
 
 - (void)didMoveToWindow {
     [super didMoveToWindow];
-    
-    _dataCount = [_delegate numberOfItemsInMessageKit];
-    [self scrollToBottom:NO];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self scrollToBottom:NO];
+    });
 }
+
 
 /**
  *  滚动到底部
  */
 - (void)scrollToBottom:(BOOL)animated {
     
-    NSInteger lastItemIndex = _dataCount - 1;
-    if (lastItemIndex < 0) {
-        lastItemIndex = 0;
+    NSInteger lastItemIndex = _messageModelDict.count - 1;
+    if (lastItemIndex > 0) {
+        [_collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:lastItemIndex inSection:0] atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:animated];
     }
-    [_collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:lastItemIndex inSection:0] atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:animated];
 }
 
-/**
- *  添加新数据
- *
- *  @param messageArray 
- */
+
 - (void)insertMessageWithArray:(NSArray *)messageArray {
     
-    NSMutableArray *array = [NSMutableArray new];
-    
-    for (NSInteger index = _dataCount; index < (_dataCount + messageArray.count); index++) {
+    NSInteger weakDictCount = _messageModelDict.count;
+    __weak NSMutableDictionary *__messageModelDict = _messageModelDict;
+    __weak ZMessageKit *weakSelf = self;
+    __weak UICollectionView *weakCollectionView = _collectionView;
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_async(queue, ^{
         
-        ZMessageModel *messageModel = [[ZMessageModel alloc] init];
-        messageModel.messages = messageArray[_dataCount - index];
-        [_messageModelDict setObject:messageModel forKey:@(index)];
+        NSMutableArray *array = [NSMutableArray new];
+        NSInteger messageModelDictCount = _messageModelDict.count;
+        for (NSInteger index = _messageModelDict.count; index < (messageModelDictCount + messageArray.count); index++) {
+            [array addObject:[NSIndexPath indexPathForRow:index inSection:0]];
+            
+            ZMessageModel *model = messageArray[index - messageModelDictCount];
+            
+            [model resetMessageSize];
+            [__messageModelDict setObject:model forKey:@(index)];
+        }
+     
         
-        [array addObject:[NSIndexPath indexPathForRow:index inSection:0]];
-    }
-    
-    __weak UICollectionView *__collectionView = _collectionView;
-    [_collectionView performBatchUpdates:^{
-        
-        [__collectionView insertItemsAtIndexPaths:array];
-        
-    } completion:^(BOOL finished) {
-        
-        [self scrollToBottom:YES];
-        
-    }];
-    
-}
 
-- (void)insertMessage:(NSInteger)count {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            // 初次赋值数据 weakDictCount 为0, 则不需要performBatchUpdates更新 view
+            if (weakDictCount == 0) {
+                [_collectionView reloadData];
+                [weakSelf scrollToBottom:NO];
+            } else {
+                
+                __weak UICollectionView *weakCollectionView2 = _collectionView;
+                [weakCollectionView performBatchUpdates:^{
+                    [weakCollectionView2 insertItemsAtIndexPaths:array];
+                } completion:^(BOOL finished) {
+                    [weakSelf scrollToBottom:YES];
+                    [MBProgressHUD hideAllHUDsForView:self animated:YES];
+                }];
+            }
+           
 
-    NSMutableArray *array = [NSMutableArray new];
-    
-    for (NSInteger index = _dataCount; index < (_dataCount + count); index++) {
-        [array addObject:[NSIndexPath indexPathForRow:index inSection:0]];
-    }
-
-    NSLog(@"array is %@", array);
-    
-    __weak UICollectionView *__collectionView = _collectionView;
-    [_collectionView performBatchUpdates:^{
+        });
+       
         
-        [__collectionView insertItemsAtIndexPaths:array];
-        
-    } completion:^(BOOL finished) {
-        
-        [self scrollToBottom:YES];
-        
-    }];
-    
+        NSLog(@"resetMessageSize over");
+    });
     
 }
 
@@ -144,8 +136,7 @@ static NSString *kfooterIdentifier =  @"kfooterIdentifier";
  *  @return
  */
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    _dataCount = [_delegate numberOfItemsInMessageKit];
-    return _dataCount;
+    return _messageModelDict.count;
 }
 
 /**
@@ -189,14 +180,10 @@ static NSString *kfooterIdentifier =  @"kfooterIdentifier";
  */
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    ZMessageModel *messageModel;
+    ZMessageModel *messageModel = _messageModelDict[@(indexPath.row)];
     
-    messageModel = _messageModelDict[@(indexPath.row)];
-    if (messageModel == nil) {
-        messageModel = [_delegate messageModelOfItems:indexPath];
-        [_messageModelDict setObject:messageModel forKey:@(indexPath.row)];
-    }
-   
+    NSLog(@"indexPath %f", messageModel.messageSize.height);
+    
     return CGSizeMake(self.frame.size.width - 20, messageModel.messageSize.height);
 }
 
