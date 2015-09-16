@@ -11,8 +11,13 @@
 #import "ZMessageModel.h"
 #import "ZMessageSendView.h"
 #import "ZMessageDelegate.h"
+#import "MWPhotoBrowser.h"
 
-@interface ZMessageKit : UIView<UICollectionViewDelegate,UICollectionViewDataSource,UITextFieldDelegate>
+@interface ZMessageKit : UIView<UICollectionViewDelegate,
+UICollectionViewDataSource,
+UITextFieldDelegate,
+MWPhotoBrowserDelegate,
+ZMessageSendDelete>
 
 /**
  *  代理方法

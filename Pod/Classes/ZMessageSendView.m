@@ -74,8 +74,6 @@
     camera.delegate = self;
     camera.maximum = 9;
     camera.threshold = 0;
-    camera.multiple = NO;
-    camera.allowsEditing = NO;
     [camera show];
 }
 
@@ -94,13 +92,13 @@
 
 - (void)didSendPhotoWidthImage:(UIImage *)image {
     
-    [_delegate didSendMessage:image messageOptions:ZMessageImageMessage];
 }
 
 - (void)didSendPhotoWithImageArray:(NSArray *)imageArry {
     
-    [_delegate didSendMessage:imageArry[0] messageOptions:ZMessageImageMessage];
-    NSLog(@"imageArry is %@", imageArry);
+    [ZCameraViewManager getImageAspectRatioThumbnaillWithArray:imageArry imageArray:^(NSArray *imageArray) {
+        [_delegate didSendImageMessage:imageArray];
+    }];
 }
 
 #pragma mark -textFieldDelegate
@@ -117,7 +115,7 @@
         return NO;
     }
     
-    [_delegate didSendMessage:textField.text messageOptions:ZMessageTextMessage];
+    [_delegate didSendTextMessage:textField.text];
     _textField.text = @"";
     return YES;
 }

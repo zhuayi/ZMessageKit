@@ -8,9 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "ZMessageModel.h"
+#import "ZMessageDelegate.h"
 
 @interface ZMessageViewCell : UICollectionViewCell
 
 @property (nonatomic, strong) ZMessageModel *messageModel;
+
+
+@property (nonatomic, strong) NSIndexPath *indexPath;
 
 @end

@@ -69,12 +69,13 @@
 
 #pragma mark - ZMessageDelegate
 
-- (void)didSendMessage:(NSObject*)message messageOptions:(ZMessageOptions)messageOptions{
+- (void)didfinishSendMessage:(NSArray *)messageModelArray{
     
-    ZMessageModel *messageModel = [[ZMessageModel alloc] init];
-    [messageModel setMessages:message messageOptions:messageOptions];
-    messageModel.mySelf = YES;
-    messageModel.faceUrl = [NSURL URLWithString:@"http://tp4.sinaimg.cn/1753070263/50/5703349473/1"];
-    [_messageView insertMessageWithArray:@[messageModel]];
+    for (ZMessageModel *messageModel in messageModelArray) {
+        messageModel.faceUrl = [NSURL URLWithString:@"http://tp4.sinaimg.cn/1753070263/50/5703349473/1"];
+    }
+    
+    NSLog(@"message : is %@",  messageModelArray);
 }
+
 @end

@@ -16,6 +16,13 @@
     
     // 数据对象字典
     NSMutableDictionary *_messageModelDict;
+    
+    // 当前控制器
+    UIViewController *_rootViewController;
+    
+    // 图片消息数组
+    NSMutableArray *_messageImageArray;
+
 }
 
 static NSString *CellIdentifier = @"GradientCell";
@@ -29,10 +36,12 @@ static NSString *kfooterIdentifier =  @"kfooterIdentifier";
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didClickCellButton:) name:kDidClickCellButton object:nil];
         
         _messageModelDict = [NSMutableDictionary new];
         
         _sendView = [[ZMessageSendView alloc] initWithFrame:CGRectMake(0, frame.size.height - 39, SCREEN_WIDTH, 39)];
+        _sendView.delegate = self;
         [self addSubview:_sendView];
         
         UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc]init];
@@ -45,13 +54,16 @@ static NSString *kfooterIdentifier =  @"kfooterIdentifier";
         
         [self bringSubviewToFront:_sendView];
         
+        
+        _messageImageArray = [NSMutableArray new];
+        _rootViewController = [[[UIApplication sharedApplication] keyWindow] rootViewController];
+        
     }
     return self;
 }
 
 - (void)setDelegate:(id<ZMessageDelegate>)delegate {
     _delegate = delegate;
-    _sendView.delegate = delegate;
 }
 - (ZMessageStyle *)style {
     return [ZMessageStyle sharedManager];
@@ -92,9 +104,18 @@ static NSString *kfooterIdentifier =  @"kfooterIdentifier";
             [array addObject:[NSIndexPath indexPathForRow:index inSection:0]];
             
             ZMessageModel *model = messageArray[index - messageModelDictCount];
-            
             [model resetMessageSize];
             [__messageModelDict setObject:model forKey:@(index)];
+            
+            if (model.messageOptions == ZMessageImageUrlMessage) {
+                
+                [_messageImageArray addObject:[MWPhoto photoWithURL:[NSURL URLWithString:(NSString *)model.messages]]];
+            }
+            
+            if (model.messageOptions == ZMessageImageMessage) {
+                
+                [_messageImageArray addObject:[MWPhoto photoWithImage:(UIImage *)model.messages]];
+            }
         }
      
         
@@ -115,11 +136,7 @@ static NSString *kfooterIdentifier =  @"kfooterIdentifier";
                     [MBProgressHUD hideAllHUDsForView:self animated:YES];
                 }];
             }
-           
-
         });
-       
-        
         NSLog(@"resetMessageSize over");
     });
     
@@ -163,6 +180,7 @@ static NSString *kfooterIdentifier =  @"kfooterIdentifier";
     
     ZMessageViewCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:CellIdentifier forIndexPath:indexPath];
     cell.messageModel = _messageModelDict[@(indexPath.row)];
+    cell.indexPath = indexPath;
     return cell;
 }
 
@@ -226,7 +244,7 @@ static NSString *kfooterIdentifier =  @"kfooterIdentifier";
  *
  *  @param notification
  */
-- (void)keyboardWillShow:(NSNotification*)notification {
+- (void)keyboardWillShow:(NSNotification *)notification {
     NSDictionary *userInfo = [notification userInfo];
     NSValue* aValue = [userInfo objectForKey:UIKeyboardFrameEndUserInfoKey];
     CGRect keyboardRect = [aValue CGRectValue];
@@ -245,16 +263,85 @@ static NSString *kfooterIdentifier =  @"kfooterIdentifier";
  *
  *  @param notification
  */
-- (void)keyboardWillHide:(NSNotification*)notification {
+- (void)keyboardWillHide:(NSNotification *)notification {
     
     _sendView.top = self.height - _sendView.height;
     _collectionView.height = _sendView.top;
     _collectionView.userInteractionEnabled = YES;
 }
 
+- (void)didClickCellButton:(NSNotification *)notification {
+    
+    if ([notification.object[0] isKindOfClass:[ZMessageModel class]]) {
+    
+        ZMessageModel *messageModel = notification.object[0];
+        if (messageModel.messageOptions == ZMessageImageMessage || messageModel.messageOptions == ZMessageImageUrlMessage) {
+
+            MWPhotoBrowser *browser = [[MWPhotoBrowser alloc] initWithDelegate:self];
+
+            [browser setCurrentPhotoIndex:[notification.object[1] integerValue]];
+            if ([_rootViewController isKindOfClass:[UINavigationController class]]) {
+                [(UINavigationController *)_rootViewController pushViewController:browser animated:YES];
+            } else {
+                [_rootViewController.navigationController pushViewController:browser animated:YES];
+            }
+        }
+    }
+    NSLog(@"notification is %@", notification.object);
+}
+
+
+#pragma mark -MWPhotoBrowserDelegate
+- (NSUInteger)numberOfPhotosInPhotoBrowser:(MWPhotoBrowser *)photoBrowser {
+    return _messageImageArray.count;
+}
+
+- (id <MWPhoto>)photoBrowser:(MWPhotoBrowser *)photoBrowser photoAtIndex:(NSUInteger)index {
+
+    return _messageImageArray[index];
+}
+
+#pragma mark - ZMessageSendDelegate;
+
+/**
+ *  发送文本消息
+ *
+ *  @param message
+ */
+- (void)didSendTextMessage:(NSString *)message {
+    
+    ZMessageModel *messageModel = [[ZMessageModel alloc] init];
+    [messageModel setMessages:message messageOptions:ZMessageTextMessage];
+    messageModel.mySelf = YES;
+    [self insertMessageWithArray:@[messageModel]];
+    
+    [_delegate didfinishSendMessage:@[messageModel]];
+}
+
+/**
+ *  发送图片消息
+ *
+ *  @param imageArray
+ */
+- (void)didSendImageMessage:(NSArray *)imageArray {
+    
+    NSMutableArray *newMessageArray = [NSMutableArray new];
+    for (int i = 0; i < imageArray.count; i++) {
+        ZMessageModel *messageModel = [[ZMessageModel alloc] init];
+        [messageModel setMessages:imageArray[i] messageOptions:ZMessageImageMessage];
+        messageModel.mySelf = YES;
+        messageModel.faceUrl = [NSURL URLWithString:@"http://tp4.sinaimg.cn/1753070263/50/5703349473/1"];
+        [newMessageArray addObject:messageModel];
+    }
+    
+    [self insertMessageWithArray:newMessageArray];
+    
+    [_delegate didfinishSendMessage:newMessageArray];
+}
+
+
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    
     [_messageModelDict removeAllObjects];
     _messageModelDict = nil;
     NSLog(@"%s",  __func__);

@@ -34,16 +34,16 @@
     // 获取文本内容的高度;
     if (_messageOptions == ZMessageTextMessage) {
 
-        NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-        [paragraphStyle setLineSpacing:10];
+//        NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+//        [paragraphStyle setLineSpacing:10];
         NSDictionary *fontDict = @{
                                    NSFontAttributeName:[ZMessageStyle sharedManager].messageFont,
-                                   NSParagraphStyleAttributeName: paragraphStyle
+//                                   NSParagraphStyleAttributeName: paragraphStyle
                                    };
 
 
         _messageSize = [(NSString *)_messages boundingRectWithSize:CGSizeMake(180, CGFLOAT_MAX)
-                                                         options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading
+                                                         options:NSStringDrawingUsesLineFragmentOrigin
                                                       attributes:fontDict
                                                          context:nil].size;
 

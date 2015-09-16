@@ -15,7 +15,7 @@
 /**
  *  代理方法
  */
-@property (nonatomic, weak) id<ZMessageDelegate> delegate;
+@property (nonatomic, weak) id<ZMessageSendDelete> delegate;
 
 /**
  *  语音按钮

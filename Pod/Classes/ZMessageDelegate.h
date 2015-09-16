@@ -12,10 +12,29 @@
 @protocol ZMessageDelegate <NSObject>
 
 /**
+ *  发送图片消息
+ *
+ *  @param imageArray 
+ */
+- (void)didfinishSendMessage:(NSArray *)messageModelArray;
+
+@end
+
+
+@protocol ZMessageSendDelete <NSObject>
+
+/**
  *  发送消息
  *
- *  @param message 
+ *  @param message
  */
-- (void)didSendMessage:(NSObject *)message messageOptions:(ZMessageOptions)messageOptions;
+- (void)didSendTextMessage:(NSString *)message;
+
+/**
+ *  发送图片信息
+ *
+ *  @param imageArray 
+ */
+- (void)didSendImageMessage:(NSArray *)imageArray;
 
 @end

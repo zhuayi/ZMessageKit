@@ -8,6 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
+#define kDidClickCellButton @"kDidClickCellButton"
+
+
 typedef NS_OPTIONS(NSUInteger, ZMessageOptions) {
     
     // 文本消息

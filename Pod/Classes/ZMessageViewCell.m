@@ -47,9 +47,12 @@
         [_backview setBackgroundImage:_messageBackImage forState:UIControlStateNormal];
         [_backview setBackgroundImage:_messageBackHighImage forState:UIControlStateSelected];
         _backview.titleLabel.numberOfLines = 0;
-        _backview.top = 5;
+        _backview.titleLabel.textAlignment = NSTextAlignmentLeft;
         _backview.titleLabel.font = [ZMessageStyle sharedManager].messageFont;
         _backview.userInteractionEnabled = NO;
+        
+        [_backview addTarget:self action:@selector(didClickButton) forControlEvents:UIControlEventTouchUpInside];
+        
         [self addSubview:_backview];
         
         _imageViewMask = [[UIImageView alloc] init];
@@ -138,6 +141,11 @@
     _backview.selected = !_messageModel.mySelf;
 }
 
+
+- (void)didClickButton {
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kDidClickCellButton object:@[_messageModel, @(_indexPath.row)]];
+}
 
 @end
 
