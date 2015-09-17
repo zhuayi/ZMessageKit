@@ -36,8 +36,10 @@ typedef NS_OPTIONS(NSUInteger, ZMessageOptions) {
  */
 @property (nonatomic, assign) BOOL mySelf;
 
-
-@property (nonatomic, assign) CGSize messageSize;
+/**
+ *  消息大小
+ */
+@property (nonatomic, assign, readonly) CGSize messageSize;
 
 /**
  *  头像地址
@@ -59,7 +61,7 @@ typedef NS_OPTIONS(NSUInteger, ZMessageOptions) {
 - (void)setMessages:(NSObject *)messages messageOptions:(ZMessageOptions)messageOptions;
 
 /**
- *  重置消息
+ *  重置消息大小
  */
 - (void)resetMessageSize;
 @end

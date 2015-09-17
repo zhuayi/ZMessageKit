@@ -51,17 +51,8 @@
     // 设置图片高度
     if (_messageOptions == ZMessageImageUrlMessage) {
 
-        SDWebImageManager *manger = [SDWebImageManager sharedManager];
-        [manger downloadImageWithURL:[NSURL URLWithString:(NSString *)_messages] options:SDWebImageLowPriority progress:^(NSInteger receivedSize, NSInteger expectedSize) {
-            
-        } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
-            
-            if (image && finished) {
-                _messageSize = [self getMessageSizeWithImage:image] ;
-                finishedDownImage = YES;
-            }
-        }];
         
+        [NSThread detachNewThreadSelector:@selector(getDownImage) toTarget:self withObject:nil];
         while (!finishedDownImage) {
             
             [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
@@ -74,6 +65,21 @@
         _messageSize = [self getMessageSizeWithImage:(UIImage *)_messages] ;
         finishedDownImage = YES;
     }
+}
+
+
+- (void)getDownImage {
+    
+    SDWebImageManager *manger = [SDWebImageManager sharedManager];
+    [manger downloadImageWithURL:[NSURL URLWithString:(NSString *)_messages] options:SDWebImageLowPriority progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+        
+    } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
+        
+        if (image && finished) {
+            _messageSize = [self getMessageSizeWithImage:image] ;
+            finishedDownImage = YES;
+        }
+    }];
 }
 
 - (CGSize)getMessageSizeWithImage:(UIImage *)image {

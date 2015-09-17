@@ -38,6 +38,16 @@
                ReferencedContainer = "container:ZMessageKit.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "38FAD90D1BAAC2E700904D7A"
+               BuildableName = "ZMessageKit_ExampleUITests.xctest"
+               BlueprintName = "ZMessageKit_ExampleUITests"
+               ReferencedContainer = "container:ZMessageKit.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference

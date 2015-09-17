@@ -26,14 +26,13 @@
 }
 
 static NSString *CellIdentifier = @"GradientCell";
-static NSString *kfooterIdentifier =  @"kfooterIdentifier";
 
 - (instancetype)initWithFrame:(CGRect)frame {
     
     self = [super initWithFrame:frame];
     if (self) {
-        self.backgroundColor = [UIColor whiteColor];
         
+        self.backgroundColor = [UIColor whiteColor];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didClickCellButton:) name:kDidClickCellButton object:nil];
@@ -42,8 +41,8 @@ static NSString *kfooterIdentifier =  @"kfooterIdentifier";
         
         UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc]init];
         _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, self.width, self.height - self.sendView.height) collectionViewLayout:flowLayout];
-        _collectionView.backgroundColor = [UIColor whiteColor];
         [_collectionView registerClass:[ZMessageViewCell class] forCellWithReuseIdentifier:CellIdentifier];
+        _collectionView.backgroundColor = [UIColor clearColor];
         _collectionView.delegate = self;
         _collectionView.dataSource = self;
         [self addSubview:_collectionView];
@@ -53,9 +52,11 @@ static NSString *kfooterIdentifier =  @"kfooterIdentifier";
         _messageImageArray = [NSMutableArray new];
         _rootViewController = [[[UIApplication sharedApplication] keyWindow] rootViewController];
         
+        [MBProgressHUD showHUDAddedTo:self animated:YES];
     }
     return self;
 }
+
 
 - (void)setDelegate:(id<ZMessageDelegate>)delegate {
     _delegate = delegate;
@@ -134,6 +135,8 @@ static NSString *kfooterIdentifier =  @"kfooterIdentifier";
                     [MBProgressHUD hideAllHUDsForView:self animated:YES];
                 }];
             }
+            
+            [MBProgressHUD hideHUDForView:self animated:YES];
         });
     });
 }

@@ -42,7 +42,7 @@
     self.rightButton.title = @"新增数据";
 
     _dataArray = [NSMutableArray new];
-    for (int i = 0 ; i < 20; i++) {
+    for (int i = 0 ; i < 200; i++) {
         ZMessageModel *messageModel = [[ZMessageModel alloc] init];
         
         if ( i %2 ) {
@@ -58,7 +58,6 @@
         [_dataArray addObject:messageModel];
         
     }
-    
     [_messageView insertMessageWithArray:_dataArray];
     
 }
