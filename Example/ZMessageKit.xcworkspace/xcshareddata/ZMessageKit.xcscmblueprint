@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "D3128BAF189F1F5335FAB8204A398F82699559B1",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "3562731F8774261876CFEB68526F33C09926DBDF" : 0,
+    "D3128BAF189F1F5335FAB8204A398F82699559B1" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "4A9C624C-FCCA-4BAA-8759-6ACF4AF168C8",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "3562731F8774261876CFEB68526F33C09926DBDF" : "ZCamera",
+    "D3128BAF189F1F5335FAB8204A398F82699559B1" : "ZMessageKit"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "ZMessageKit",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "Example\/ZMessageKit.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/zhuayi\/ZCamera.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "3562731F8774261876CFEB68526F33C09926DBDF"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/zhuayi\/ZMessageKit.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "D3128BAF189F1F5335FAB8204A398F82699559B1"
+    }
+  ]
+}

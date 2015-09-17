@@ -19,6 +19,7 @@
 
 @end
 
+
 @implementation ZMessageViewCell {
   
     UIImageView *_faceView;
