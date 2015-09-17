@@ -31,9 +31,13 @@
     self.automaticallyAdjustsScrollViewInsets = NO; 
     _messageView = [[ZMessageKit alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height -  64)];
     _messageView.delegate = self;
-    _messageView.style.messageFont = [UIFont systemFontOfSize:14.0];
     [self.view addSubview:_messageView];
 
+    // 样式哦
+    _messageView.style.messageFont = [UIFont systemFontOfSize:14.0];
+    _messageView.style.messageColor = [UIColor blackColor];
+    
+    
     self.rightButton.title = @"新增数据";
 
     _dataArray = [NSMutableArray new];
@@ -47,7 +51,7 @@
             
         } else {
             messageModel.faceUrl = [NSURL URLWithString:@"http://tp2.sinaimg.cn/1243861097/50/5679886030/1"];
-            [messageModel setMessages:@"http://ww2.sinaimg.cn/thumbnail/c0320848jw1ew428x1exyj20u01hcn7f.jpg" messageOptions:ZMessageImageUrlMessage];
+            [messageModel setMessages:@"http://ww4.sinaimg.cn/bmiddle/834d87e8jw1ew572lg9j5j20ku0v9go3.jpg" messageOptions:ZMessageImageUrlMessage];
         }
         
         [_dataArray addObject:messageModel];

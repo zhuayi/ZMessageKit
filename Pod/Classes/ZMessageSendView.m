@@ -9,7 +9,7 @@
 #import "ZMessageSendView.h"
 #import "ZMacro.h"
 #import "UIView+Util.h"
-
+#import "ZMessageStyle.h"
 @implementation ZMessageSendView
 
 
@@ -21,22 +21,33 @@
         self.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"sendViewBg"]];
         
         
-        [self addSubview:self.faceButton];
-        [self addSubview:self.sendOtherButton];
-        [self addSubview:self.voiceButton];
         
-        _textField = [[UITextView alloc] initWithFrame:CGRectMake(5 + 30 + 5, (self.height - 30) / 2, self.width - 3 * 34, 30)];
+        if ([ZMessageStyle sharedManager].isNeedVoice) {
+            [self addSubview:self.voiceButton];
+        }
+        
+        [self addSubview:self.sendOtherButton];
+        
+        if ([ZMessageStyle sharedManager].isNeedFace) {
+            
+            [self addSubview:self.faceButton];
+        }
+        
+        _textField = [[UITextView alloc] initWithFrame:CGRectMake(5 + _voiceButton.left + _voiceButton.width, (self.height - 30) / 2, self.width - (_voiceButton.width + _faceButton.width + _sendOtherButton.width) - 10, 30)];
         _textField.autoresizingMask = UIViewAutoresizingFlexibleHeight;
-//        _textField.keyboardType = UIKeyboardTypeTwitter;
+        _textField.keyboardType = UIKeyboardTypeWebSearch;
         _textField.autocorrectionType = UITextAutocorrectionTypeNo;
         _textField.layer.cornerRadius = 4;
         _textField.layer.masksToBounds = YES;
         _textField.delegate = self;
         _textField.layer.borderWidth = 1;
+        _textField.font = [UIFont boldSystemFontOfSize:14.0];
         _textField.layer.borderColor = [[[UIColor lightGrayColor] colorWithAlphaComponent:0.4] CGColor];
-//        _textField.adjustsFontSizeToFitWidth = YES;
-//        [_textField setBorderStyle:UITextBorderStyleRoundedRect];
         [self addSubview:_textField];
+        
+        _faceButton.left = _textField.left + _textField.width + 2;
+        _sendOtherButton.left = _textField.left + _textField.width + _faceButton.width + 2;
+
     }
     return self;
 }
@@ -44,7 +55,7 @@
 - (UIButton *)faceButton {
     if (_faceButton == nil) {
         
-        _faceButton = [[UIButton alloc] initWithFrame:CGRectMake(self.width - 30 * 2, (self.height - 30 ) / 2, 30, 30)];
+        _faceButton = [[UIButton alloc] initWithFrame:CGRectMake(_sendOtherButton.left - _sendOtherButton.width, (self.height - 30 ) / 2, 30, 30)];
         [_faceButton setBackgroundImage:[UIImage imageNamed:@"face"] forState:UIControlStateNormal];
         [_faceButton setBackgroundImage:[UIImage imageNamed:@"faceHigh"] forState:UIControlStateHighlighted];
     }
@@ -55,7 +66,7 @@
     
     if (_sendOtherButton == nil) {
         
-        _sendOtherButton = [[UIButton alloc] initWithFrame:CGRectMake(self.width - 30, (self.height - 30 ) / 2, 30, 30)];
+        _sendOtherButton = [[UIButton alloc] initWithFrame:CGRectMake(self.width - 32, (self.height - 30 ) / 2, 30, 30)];
         
         [_sendOtherButton addTarget:self action:@selector(gotoCamera) forControlEvents:UIControlEventTouchUpInside];
         [_sendOtherButton setBackgroundImage:[UIImage imageNamed:@"sendotherHigh"] forState:UIControlStateHighlighted];
@@ -67,7 +78,7 @@
 - (UIButton *)voiceButton {
     if (_voiceButton == nil) {
         
-        _voiceButton = [[UIButton alloc] initWithFrame:CGRectMake(5, (self.height - 30 ) / 2, 30, 30)];
+        _voiceButton = [[UIButton alloc] initWithFrame:CGRectMake(0, (self.height - 30 ) / 2, 30, 30)];
         [_voiceButton setBackgroundImage:[UIImage imageNamed:@"voiceHigh"] forState:UIControlStateHighlighted];
         [_voiceButton setBackgroundImage:[UIImage imageNamed:@"voice"] forState:UIControlStateNormal];
     }
@@ -113,36 +124,20 @@
 
 #pragma mark -textFieldDelegate
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
-    if ([text isEqualToString:@"\n"]){ //判断输入的字是否是回车，即按下return
-        //在这里做你响应return键的代码
+    
+    if ([text isEqualToString:@"\n"]) {
+        if ([textView.text isEqualToString:@""]) {
+            return NO;
+        }
+        
         [_delegate didSendTextMessage:textView.text];
         textView.text = @"";
-        return NO; //这里返回NO，就代表return键值失效，即页面上按下return，不会出现换行，如果为yes，则输入页面会换行
-    }
-    
-    return YES;
-}
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString*)string {
-    
-    NSString *text = [textField.text stringByReplacingCharactersInRange:range withString:string];
-    _textField.text = text;
-    return NO;
-}
-
-- (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    
-    if ([_textField.text isEqualToString:@""]) {
+        
         return NO;
     }
     
-    [_delegate didSendTextMessage:textField.text];
-    _textField.text = @"";
     return YES;
 }
 
-- (void)textFieldDidBeginEditing:(UITextField *)textField {
-    
-
-}
 
 @end

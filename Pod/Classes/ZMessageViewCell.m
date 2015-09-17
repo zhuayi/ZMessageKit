@@ -36,21 +36,20 @@
     if (self) {
     
         _faceView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 10, 40, 40)];
-        _faceView.backgroundColor = [UIColor grayColor];
         [self addSubview:_faceView];
         
-        _messageBackImage = [[UIImage imageNamed:@"chatto_bg_normal"] resizableImageWithCapInsets:UIEdgeInsetsMake(35, 10, 10, 22)];
-        _messageBackHighImage = [[UIImage imageNamed:@"chatfrom_bg_normal"] resizableImageWithCapInsets:UIEdgeInsetsMake(35, 22, 10, 10)];
+        _messageBackImage = [ZMessageStyle sharedManager].messageLeftPaopaoImage;
+        _messageBackHighImage = [ZMessageStyle sharedManager].messageRightPaopaoImage;
         
         // 设置消息背景
         _backview = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_backview setBackgroundImage:_messageBackImage forState:UIControlStateNormal];
-        [_backview setBackgroundImage:_messageBackHighImage forState:UIControlStateSelected];
+        [_backview setBackgroundImage:[ZMessageStyle sharedManager].messageLeftPaopaoImage forState:UIControlStateNormal];
+        [_backview setBackgroundImage:[ZMessageStyle sharedManager].messageRightPaopaoImage forState:UIControlStateSelected];
         _backview.titleLabel.numberOfLines = 0;
         _backview.titleLabel.textAlignment = NSTextAlignmentLeft;
         _backview.titleLabel.font = [ZMessageStyle sharedManager].messageFont;
         _backview.userInteractionEnabled = NO;
-        
+        [_backview setTitleColor:[ZMessageStyle sharedManager].messageColor forState:UIControlStateNormal];
         [_backview addTarget:self action:@selector(didClickButton) forControlEvents:UIControlEventTouchUpInside];
         
         [self addSubview:_backview];
@@ -95,8 +94,14 @@
     }
     
     // 远程图片消息
-    if (messageModel.messageOptions == ZMessageImageUrlMessage) {
-        [self.messageImageView sd_setImageWithURL:(NSURL *)_messageModel.messages];
+    if (messageModel.messageOptions == ZMessageImageUrlMessage || messageModel.messageOptions == ZMessageImageMessage) {
+        
+        if (messageModel.messageOptions == ZMessageImageUrlMessage) {
+            [self.messageImageView sd_setImageWithURL:(NSURL *)_messageModel.messages];
+        } else if (messageModel.messageOptions == ZMessageImageMessage) {
+            self.messageImageView.image = (UIImage *)_messageModel.messages;
+        }
+        
         self.messageImageView.hidden = NO;
         self.messageImageView.size = _messageModel.messageSize;
         if (_messageModel.mySelf) {
@@ -109,23 +114,7 @@
         _messageImageView.layer.mask = _imageViewMask.layer;
         _backview.userInteractionEnabled = YES;
     }
-    
-    // 本地图片消息
-    if (messageModel.messageOptions == ZMessageImageMessage) {
-        self.messageImageView.image = (UIImage *)_messageModel.messages;
-        self.messageImageView.hidden = NO;
-        self.messageImageView.size = _messageModel.messageSize;
-        if (_messageModel.mySelf) {
-            
-            _imageViewMask.image = _messageBackImage;
-        } else {
-            _imageViewMask.image = _messageBackHighImage;
-        }
-        _imageViewMask.frame = CGRectInset(_messageImageView.frame, 0.0f, 0.0f);
-        _messageImageView.layer.mask = _imageViewMask.layer;
-        _backview.userInteractionEnabled = YES;
-    }
-    
+
     
     // 设置气泡类型, 左右
     if (_messageModel.mySelf) {

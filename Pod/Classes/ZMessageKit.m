@@ -341,6 +341,7 @@ static NSString *kfooterIdentifier =  @"kfooterIdentifier";
 }
 
 - (void)dealloc {
+    [ZMessageStyle dellocInstance];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [_messageModelDict removeAllObjects];
     _messageModelDict = nil;

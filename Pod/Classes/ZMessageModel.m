@@ -34,11 +34,8 @@
     // 获取文本内容的高度;
     if (_messageOptions == ZMessageTextMessage) {
 
-//        NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-//        [paragraphStyle setLineSpacing:10];
         NSDictionary *fontDict = @{
                                    NSFontAttributeName:[ZMessageStyle sharedManager].messageFont,
-//                                   NSParagraphStyleAttributeName: paragraphStyle
                                    };
 
 
@@ -70,7 +67,6 @@
             [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
         }
     }
-    
     
     // 设置图片高度
     if (_messageOptions == ZMessageImageMessage) {
