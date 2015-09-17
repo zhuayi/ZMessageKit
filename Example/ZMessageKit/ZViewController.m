@@ -28,23 +28,24 @@
     self.modalPresentationStyle = UIModalPresentationOverCurrentContext;
     self.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
 
-    self.automaticallyAdjustsScrollViewInsets = NO; 
+    self.automaticallyAdjustsScrollViewInsets = NO;
+    
+    // 样式
+    [ZMessageStyle sharedManager].buttonsListOptions = ZMessageSendViewVoice | ZMessageSendViewFace | ZMessageSendViewOthor;
+    [ZMessageStyle sharedManager].messageFont = [UIFont systemFontOfSize:14.0];
+    [ZMessageStyle sharedManager].messageColor = [UIColor blackColor];
+    
     _messageView = [[ZMessageKit alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height -  64)];
     _messageView.delegate = self;
     [self.view addSubview:_messageView];
 
-    // 样式哦
-    _messageView.style.messageFont = [UIFont systemFontOfSize:14.0];
-    _messageView.style.messageColor = [UIColor blackColor];
-    
-    
     self.rightButton.title = @"新增数据";
 
     _dataArray = [NSMutableArray new];
     for (int i = 0 ; i < 20; i++) {
         ZMessageModel *messageModel = [[ZMessageModel alloc] init];
         
-        if (i %2) {
+        if ( i %2 ) {
             messageModel.mySelf = YES;
             messageModel.faceUrl = [NSURL URLWithString:@"http://tp4.sinaimg.cn/1753070263/50/5703349473/1"];
             [messageModel setMessages:@"http://ww4.sinaimg.cn/bmiddle/a716fd45jw1ew3j8kszwuj20q20iu0yh.jpg" messageOptions:ZMessageImageUrlMessage];

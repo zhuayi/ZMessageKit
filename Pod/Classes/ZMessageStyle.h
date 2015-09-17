@@ -7,8 +7,23 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "ZCameraViewManager.h"
+#import "ZMessageDelegate.h"
 
-@interface ZMessageStyle : NSObject
+typedef NS_OPTIONS(NSUInteger, ZMessageSendViewButtons) {
+    
+    // 文本消息
+    ZMessageSendViewVoice = 1 << 0,
+    
+    // 远程图片消息
+    ZMessageSendViewFace = 1 << 1,
+    
+    // 本地图片消息
+    ZMessageSendViewOthor = 1 << 2,
+    
+};
+
+@interface ZMessageStyle : NSObject<ZCameraViewDelegate>
 
 /**
  *  单例方法
@@ -17,8 +32,17 @@
  */
 + (ZMessageStyle *)sharedManager;
 
-
 + (void)dellocInstance;
+
+/**
+ *  代理方法
+ */
+@property (nonatomic, weak) id<ZMessageSendDelete> delegate;
+
+/**
+ *  按钮类型
+ */
+@property (nonatomic, assign) NSInteger buttonsListOptions;
 
 /**
  *  文本内容字体
@@ -31,15 +55,19 @@
 @property (nonatomic, strong) UIColor *messageColor;
 
 /**
- *  是否需要语音输入
+ *  发送其他类型
  */
-@property (nonatomic, assign) BOOL isNeedVoice;
-
+@property (nonatomic, strong) UIButton *sendOtherButton;
 
 /**
- *  是否需要表情输入
+ *  语音按钮
  */
-@property (nonatomic, assign) BOOL isNeedFace;
+@property (nonatomic, strong) UIButton *voiceButton;
+
+/**
+ *  头像按钮
+ */
+@property (nonatomic, strong) UIButton *faceButton;
 
 /**
  *  左侧消息气泡
@@ -51,6 +79,7 @@
  *  右侧消息气泡
  */
 @property (nonatomic, strong) UIImage *messageRightPaopaoImage;
+
 
 
 @end

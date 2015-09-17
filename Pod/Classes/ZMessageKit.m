@@ -40,12 +40,8 @@ static NSString *kfooterIdentifier =  @"kfooterIdentifier";
         
         _messageModelDict = [NSMutableDictionary new];
         
-        _sendView = [[ZMessageSendView alloc] initWithFrame:CGRectMake(0, frame.size.height - 39, SCREEN_WIDTH, 39)];
-        _sendView.delegate = self;
-        [self addSubview:_sendView];
-        
         UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc]init];
-        _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, self.width, self.height - _sendView.height) collectionViewLayout:flowLayout];
+        _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, self.width, self.height - self.sendView.height) collectionViewLayout:flowLayout];
         _collectionView.backgroundColor = [UIColor whiteColor];
         [_collectionView registerClass:[ZMessageViewCell class] forCellWithReuseIdentifier:CellIdentifier];
         _collectionView.delegate = self;
@@ -53,7 +49,6 @@ static NSString *kfooterIdentifier =  @"kfooterIdentifier";
         [self addSubview:_collectionView];
         
         [self bringSubviewToFront:_sendView];
-        
         
         _messageImageArray = [NSMutableArray new];
         _rootViewController = [[[UIApplication sharedApplication] keyWindow] rootViewController];
@@ -64,9 +59,22 @@ static NSString *kfooterIdentifier =  @"kfooterIdentifier";
 
 - (void)setDelegate:(id<ZMessageDelegate>)delegate {
     _delegate = delegate;
+    [ZMessageStyle sharedManager].delegate = self;
 }
 - (ZMessageStyle *)style {
     return [ZMessageStyle sharedManager];
+}
+
+
+- (ZMessageSendView *)sendView {
+    if (_sendView == nil) {
+       
+        _sendView = [[ZMessageSendView alloc] initWithFrame:CGRectMake(0, self.height - 39, SCREEN_WIDTH, 39)];
+        _sendView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"sendViewBg"]];
+        [self addSubview:_sendView];
+    }
+    _sendView.delegate = self;
+    return _sendView;
 }
 
 
@@ -110,8 +118,6 @@ static NSString *kfooterIdentifier =  @"kfooterIdentifier";
             }
         }
      
-        
-
         dispatch_async(dispatch_get_main_queue(), ^{
             
             // 初次赋值数据 weakDictCount 为0, 则不需要performBatchUpdates更新 view
@@ -129,9 +135,7 @@ static NSString *kfooterIdentifier =  @"kfooterIdentifier";
                 }];
             }
         });
-        NSLog(@"resetMessageSize over");
     });
-    
 }
 
 #pragma mark -- UICollectionViewDataSource
@@ -191,9 +195,7 @@ static NSString *kfooterIdentifier =  @"kfooterIdentifier";
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     
     ZMessageModel *messageModel = _messageModelDict[@(indexPath.row)];
-    
-    NSLog(@"indexPath %f", messageModel.messageSize.height);
-    
+        
     return CGSizeMake(self.frame.size.width - 20, messageModel.messageSize.height);
 }
 
